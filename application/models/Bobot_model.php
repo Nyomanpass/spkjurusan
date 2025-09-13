@@ -46,4 +46,9 @@ class Bobot_model extends CI_Model
     {
         return $this->db->delete('bobot_jurusan', ['id_bobot' => $id]);
     }
+
+    public function count_all()
+    {
+        return $this->db->count_all('bobot_jurusan');
+    }
 }

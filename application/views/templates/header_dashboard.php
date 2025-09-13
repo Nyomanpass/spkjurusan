@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-gray-100">
-  <div class="flex min-h-screen">
+  <div class="flex min-h-screen justify-end">
 
     <!-- Mobile Menu Button -->
     <button id="mobile-menu-btn" class="md:hidden fixed top-4 left-4 bg-gray-800 text-white p-2 rounded">
@@ -19,9 +19,11 @@
     </button>
 
     <!-- Sidebar -->
-    <div id="sidebar" class="w-82 md:w-1/4 lg:w-1/6 h-screen sticky top-0 bg-gray-800 text-white flex-col md:flex fixed md:relative transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40">
-      <h2 class="text-center py-4 font-bold text-xl border-b border-gray-700">Menu</h2>
-      <nav class="flex-1">
+    <div id="sidebar" class="w-72 md:w-1/4 lg:w-1/6 h-screen fixed top-0 left-0 bg-gray-800 text-white flex-col md:flex transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40">
+      <div class="text-center py-4 font-bold text-xl border-b border-gray-700">
+        <img src="<?= base_url('assets/logo.jpg') ?>" alt="" class="mx-auto h-24">
+      </div>
+      <nav class="flex-1 mt-3">
         <a href="<?= base_url('home') ?>" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a>
         <a href="<?= base_url('mahasiswa') ?>" class="block px-4 py-2 hover:bg-gray-700">Mahasiswa</a>
         <a href="<?= base_url('kriteria') ?>" class="block px-4 py-2 hover:bg-gray-700">Kriteria</a>
@@ -58,4 +60,4 @@
     </script>
 
     <!-- Content -->
-    <div class="md:flex-1 p-6 w-full md:w-3/4 lg:w-5/6">
+    <div class="p-6 w-full md:w-3/4 lg:w-5/6">

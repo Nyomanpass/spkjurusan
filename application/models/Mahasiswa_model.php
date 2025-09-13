@@ -26,4 +26,9 @@ class Mahasiswa_model extends CI_Model
     {
         return $this->db->delete('mahasiswa', ['id_mahasiswa' => $id]);
     }
+
+    public function count_all()
+    {
+        return $this->db->count_all('mahasiswa');
+    }
 }

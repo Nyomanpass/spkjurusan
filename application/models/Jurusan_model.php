@@ -29,4 +29,9 @@ class Jurusan_model extends CI_Model
     {
         return $this->db->delete('jurusan', ['id_jurusan' => $id]);
     }
+
+    public function count_all()
+    {
+        return $this->db->count_all('jurusan');
+    }
 }

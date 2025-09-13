@@ -17,6 +17,7 @@
           </tbody>
           </table>
   </div>
+</div>
 <?php endif; ?>
 
 <div class="bg-white rounded-lg shadow-lg mb-6 overflow-hidden">
@@ -29,7 +30,7 @@
 
   <div class="overflow-x-auto">
     <table class="w-full">
-      <thead class="bg-gray-100">
+      <thead class="bg-white">
         <tr>
           <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 border-b">ID</th>
           <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 border-b">Kriteria</th>
@@ -52,12 +53,12 @@
         </td>
         <td class="px-4 py-3 text-center">
           <div class="flex justify-center space-x-2">
-            <a href="<?= base_url('bobot/edit/' . $b->id_bobot) ?>"
+            <a href="<?= base_url("bobot/edit/{$b->id_bobot}") ?>"
               class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-sm transition duration-200 flex items-center">
               <i class="fas fa-edit mr-1"></i>
               Edit
             </a>
-            <a href="<?= base_url('bobot/delete/' . $b->id_bobot) ?>"
+            <a href="<?= base_url("bobot/delete/{$b->id_bobot}") ?>"
               onclick="return confirm('Yakin ingin menghapus data ini?')"
               class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm transition duration-200 flex items-center">
               <i class="fas fa-trash mr-1"></i>

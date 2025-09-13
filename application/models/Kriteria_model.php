@@ -26,4 +26,9 @@ class Kriteria_model extends CI_Model
     {
         return $this->db->delete('kriteria', ['id_kriteria' => $id]);
     }
+
+    public function count_all()
+    {
+        return $this->db->count_all('kriteria');
+    }
 }
