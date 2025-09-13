@@ -1,8 +1,6 @@
-
-
 <div class="p-6">
   <div class="flex items-center justify-between mb-6">
-    <h2 class="text-2xl font-bold text-gray-800">Data Jurusan</h2>
+    <h2 class="text-2xl font-semibold text-gray-800">Data Jurusan</h2>
     <a href="<?= base_url('jurusan/create') ?>" class="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
       + Tambah Jurusan
     </a>
@@ -18,14 +16,14 @@
         </tr>
       </thead>
       <tbody class="divide-y">
-        <?php if(!empty($jurusan)): ?>
-          <?php foreach($jurusan as $j): ?>
+        <?php if (!empty($jurusan)): ?>
+          <?php foreach ($jurusan as $j): ?>
             <tr>
-              <td class="px-6 py-4 text-sm text-gray-700"><?= $j['id_jurusan'] ?></td>
-              <td class="px-6 py-4 text-sm text-gray-700"><?= htmlspecialchars($j['nama']) ?></td>
+              <td class="px-6 py-4 text-sm text-gray-700"><?= $j->id_jurusan ?></td>
+              <td class="px-6 py-4 text-sm text-gray-700"><?= htmlspecialchars($j->nama) ?></td>
               <td class="px-6 py-4 text-sm">
-                <a href="<?= base_url('jurusan/edit/'.$j['id_jurusan']) ?>" class="inline-block px-3 py-1 mr-2 bg-yellow-400 text-white rounded hover:bg-yellow-500">Edit</a>
-                <a href="<?= base_url('jurusan/delete/'.$j['id_jurusan']) ?>" onclick="return confirm('Yakin ingin menghapus jurusan ini?')" class="inline-block px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">Hapus</a>
+                <a href="<?= base_url('jurusan/edit/' . $j->id_jurusan) ?>" class="text-blue-600 hover:text-blue-900 px-3 py-1 rounded border border-blue-600 hover:bg-blue-50 transition duration-200 ">Edit</a>
+                <a href="<?= base_url('jurusan/delete/' . $j->id_jurusan) ?>" onclick="return confirm('Yakin ingin menghapus jurusan ini?')" class="text-red-600 hover:text-red-900 px-3 py-1 rounded border border-red-600 hover:bg-red-50 transition duration-200">Hapus</a>
               </td>
             </tr>
           <?php endforeach; ?>
@@ -38,4 +36,3 @@
     </table>
   </div>
 </div>
-
