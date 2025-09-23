@@ -13,6 +13,7 @@ class Mahasiswa extends CI_Controller
         $this->load->model('Nilai_model');
         $this->load->model('Preferensi_model');
         $this->load->model('Kriteria_model');
+        $this->load->model('Jurusan_model');
 
         $this->load->library('session');
         $this->load->helper(['url', 'form']);
@@ -27,13 +28,14 @@ class Mahasiswa extends CI_Controller
     {
         $data['title'] = "Data Mahasiswa";
         $data['mahasiswa'] = $this->Mahasiswa_model->get_all();
+        $data['jurusan'] = $this->Jurusan_model->get_all();
         $this->load->view('templates/header_dashboard', $data);
         $this->load->view('mahasiswa/index', $data);
         $this->load->view('templates/footer_dashboard');
     }
 
     public function create()
-    {
+    {  
         $data['title'] = "Tambah Mahasiswa";
         $this->load->view('templates/header_dashboard', $data);
         $this->load->view('mahasiswa/create');
