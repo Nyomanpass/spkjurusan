@@ -19,12 +19,12 @@
     </button>
     <!-- Sidebar -->
     <div id="sidebar" class="w-72 md:w-1/4 lg:w-1/5 h-screen fixed top-0 left-0 bg-gray-800 text-white flex-col md:flex transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40 shadow-xl">
-        <div class="text-center py-6 border-b border-gray-700">
-          <img src="<?= base_url('assets/logo.jpg') ?>" alt="Logo" class="mx-auto h-20 rounded-full shadow-md">
-        </div>
+      <div class="text-center py-6 border-b border-gray-700">
+        <img src="<?= base_url('assets/logo.jpg') ?>" alt="Logo" class="mx-auto h-20 rounded-full shadow-md">
+      </div>
 
 
-     <nav class="flex-1 mt-4 space-y-1 px-2">
+      <nav class="flex-1 mt-4 space-y-1 px-2">
         <a href="<?= base_url('home') ?>"
           class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-700 transition">
           <i class="fas fa-home w-5 mr-3"></i> Dashboard
@@ -53,7 +53,7 @@
           class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-700 transition">
           <i class="fas fa-lightbulb w-5 mr-3"></i> Rekomendasi
         </a>
-          <a href="<?= base_url('setting') ?>"
+        <a href="<?= base_url('setting') ?>"
           class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-700 transition">
           <i class="fas fa-cog w-5 mr-3"></i> Setting
         </a>
@@ -86,4 +86,4 @@
     </script>
 
     <!-- Content -->
-    <div class="p-6 md:w-3/4 lg:w-4/5">
+    <div class="p-6 w-full md:w-3/4 lg:w-4/5">

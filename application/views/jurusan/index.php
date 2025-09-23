@@ -42,12 +42,12 @@
                   <td class="px-4 py-3 text-center">
                     <div class="flex justify-center space-x-2">
                       <a onclick="document.getElementById('modalEdit<?= $j['id_jurusan'] ?>').classList.remove('hidden')"
-                        class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs transition duration-200 flex items-center">
+                        class="px-3 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs transition duration-200 flex items-center">
                         <i class="fas fa-edit mr-1"></i>Edit
                       </a>
                       <a href="<?= base_url("jurusan/delete/{$j['id_jurusan']}") ?>"
                         onclick="return confirm('Yakin ingin menghapus data ini?')"
-                        class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs transition duration-200 flex items-center">
+                        class="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs transition duration-200 flex items-center">
                         <i class="fas fa-trash mr-1"></i>Hapus
                       </a>
                     </div>

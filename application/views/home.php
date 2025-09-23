@@ -1,19 +1,19 @@
 <div class="min-h-screen bg-gray-100">
 
   <!-- Header -->
-  <div class="flex items-center justify-between mb-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 rounded-xl shadow-lg">
+  <div class="flex flex-col lg:flex-row items-center justify-between mb-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 rounded-xl shadow-lg">
     <h1 class="text-xl"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard Sistem Pendukung Keputusan</h1>
     <div class="flex gap-5 items-center">
       <span class="text-sm md:text-base opacity-90"><i class="fas fa-user mr-2"></i>Welcome, Admin</span>
       <a href="<?= base_url('login/logout') ?>"
-          class="flex items-center px-4 py-3 rounded-lg hover:text-white hover:bg-red-600 text-white transition">
-          <i class="fas fa-sign-out-alt w-5 mr-3"></i> Logout
-        </a>
+        class="flex items-center px-4 py-3 rounded-lg hover:text-white hover:bg-red-600 text-white transition">
+        <i class="fas fa-sign-out-alt w-5 mr-3"></i> Logout
+      </a>
     </div>
   </div>
 
   <!-- Statistik Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
     <!-- Mahasiswa -->
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-blue-500 hover:shadow-xl transition">
       <div class="flex items-center">
@@ -54,7 +54,7 @@
     </div>
 
     <!-- Bobot -->
-    <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-purple-500 hover:shadow-xl transition">
+    <div class=" bg-white shadow-lg rounded-xl p-6 border-l-4 border-purple-500 hover:shadow-xl transition">
       <div class="flex items-center">
         <div class="flex-1">
           <p class="text-sm text-gray-500">Total Bobot</p>

@@ -7,7 +7,7 @@
   <!-- Form -->
   <div class="p-6">
     <form method="post" action="<?= base_url('mahasiswa/update/' . $mahasiswa['id_mahasiswa']) ?>" class="space-y-6">
-      <?php 
+      <?php
       $fields = [
         'nisn' => 'NISN',
         'nama_siswa' => 'Nama Siswa',
@@ -16,10 +16,10 @@
         'alamat' => 'Alamat',
         'no_telepon' => 'No Telepon',
         'jurusan_sekarang' => 'Jurusan Sekarang'
-      ]; 
+      ];
       ?>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[calc(90vh-200px)] overflow-y-auto">
         <?php foreach ($fields as $key => $label): ?>
           <div class="<?= ($key == 'alamat') ? 'md:col-span-2' : '' ?>">
             <label class="block text-sm font-semibold text-gray-700 mb-2"><?= $label ?></label>

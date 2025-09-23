@@ -6,7 +6,7 @@
         <h2 class="text-2xl font-bold text-gray-800 mb-1">Tabel Data Kriteria</h2>
         <p class="text-gray-600 text-sm">Daftar kriteria yang digunakan dalam perhitungan</p>
       </div>
-      <a onclick="document.getElementById('modalKriteria').classList.remove('hidden')" 
+      <a onclick="document.getElementById('modalKriteria').classList.remove('hidden')"
         class="inline-flex items-center px-5 py-2.5 bg-yellow-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all duration-200">
         + Tambah
       </a>
@@ -35,12 +35,12 @@
                 <td class="px-4 py-3 text-center">
                   <div class="flex justify-center space-x-2">
                     <a onclick="document.getElementById('modalEdit<?= $row['id_kriteria'] ?>').classList.remove('hidden')"
-                      class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs transition duration-200 flex items-center">
+                      class="px-3 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs transition duration-200 flex items-center">
                       <i class="fas fa-edit mr-1"></i>Edit
                     </a>
                     <a href="<?= base_url("kriteria/delete/{$row['id_kriteria']}") ?>"
                       onclick="return confirm('Yakin ingin menghapus data ini?')"
-                      class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs transition duration-200 flex items-center">
+                      class="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs transition duration-200 flex items-center">
                       <i class="fas fa-trash mr-1"></i>Hapus
                     </a>
                   </div>
