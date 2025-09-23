@@ -28,4 +28,25 @@ class Prestasi_model extends CI_Model {
     {
         return $this->db->delete('prestasi', ['id_prestasi' => $id_prestasi]);
     }
+
+    public function getAllNilai()
+    {
+        return $this->db->get('prestasi_nilai')->result_array();
+    }
+
+    public function updateNilai($data)
+    {
+        foreach($data as $tingkat => $juara_list){
+            foreach($juara_list as $juara => $nilai){
+                $row = $this->db->get_where('prestasi_nilai', ['tingkat'=>$tingkat,'juara'=>$juara])->row();
+                if($row){
+                    $this->db->where(['tingkat'=>$tingkat,'juara'=>$juara])->update('prestasi_nilai', ['nilai'=>$nilai]);
+                } else {
+                    $this->db->insert('prestasi_nilai', ['tingkat'=>$tingkat,'juara'=>$juara,'nilai'=>$nilai]);
+                }
+            }
+        }
+    }
+
+
 }

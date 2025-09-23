@@ -1,55 +1,61 @@
-<div class="max-w-lg mx-auto">
-  <a href="<?= base_url('bobot') ?>" class="inline-block mb-4 text-black hover:text-blue-600 font-semibold">
-    &larr; Kembali ke Daftar Bobot
-  </a>
-</div>
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden w-full">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 px-6">
+    <h2 class="text-xl font-bold text-center">Edit Bobot</h2>
+  </div>
 
+  <!-- Body -->
+  <div class="p-6">
+    <?php if (empty($bobot)): ?>
+      <div class="text-red-600 text-center">Data bobot tidak ditemukan.</div>
+    <?php else: ?>
+      <form method="post" action="<?= base_url('bobot/edit/' . $bobot['id_bobot']) ?>" class="space-y-5">
 
-<div class="p-6 max-w-lg mx-auto bg-white rounded-lg shadow">
-  <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Bobot</h1>
-  <form method="post" class="space-y-4">
+        <!-- Pilih Jurusan -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Jurusan</label>
+          <select name="id_jurusan" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+            <?php foreach ($jurusan as $j): ?>
+              <option value="<?= $j['id_jurusan'] ?>" <?= $bobot['id_jurusan'] == $j['id_jurusan'] ? 'selected' : '' ?>>
+                <?= htmlspecialchars($j['nama']) ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
 
-    <!-- Pilih Jurusan -->
-    <div>
-      <label class="block font-medium mb-1">Jurusan</label>
-      <select name="id_jurusan" class="w-full border rounded p-2">
-        <?php foreach ($jurusan as $j): ?>
-          <option value="<?= $j->id_jurusan ?>" <?= $bobot->id_jurusan == $j->id_jurusan ? 'selected' : '' ?>>
-            <?= $j->nama ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+        <!-- Pilih Kriteria -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Kriteria</label>
+          <select name="id_kriteria" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+            <?php foreach ($kriteria as $k): ?>
+              <option value="<?= $k['id_kriteria'] ?>" <?= $bobot['id_kriteria'] == $k['id_kriteria'] ? 'selected' : '' ?>>
+                <?= htmlspecialchars($k['nama']) ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
 
-    <!-- Pilih Kriteria -->
-    <div>
-      <label class="block font-medium mb-1">Kriteria</label>
-      <select name="id_kriteria" class="w-full border rounded p-2">
-        <?php foreach ($kriteria as $k): ?>
-          <option value="<?= $k->id_kriteria ?>" <?= $bobot->id_kriteria == $k->id_kriteria ? 'selected' : '' ?>>
-            <?= $k->nama ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+        <!-- Input Bobot -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Bobot</label>
+          <input type="number" name="bobot" value="<?= $bobot['bobot'] ?>" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+        </div>
 
-    <!-- Input Bobot -->
-    <div>
-      <label class="block font-medium mb-1">Bobot</label>
-      <input
-        type="number"
-        name="bobot"
-        value="<?= $bobot->bobot ?>"
-        class="w-full border rounded p-2"
-        required>
-    </div>
-
-    <!-- Tombol -->
-    <div class="pt-4">
-      <button type="submit"
-        class="w-full bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
-        Simpan
-      </button>
-    </div>
-  </form>
+        <!-- Tombol -->
+        <div class="flex justify-end gap-3 pt-4 border-t">
+          <a href="<?= base_url('bobot') ?>"
+            class="px-5 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition">
+            Batal
+          </a>
+          <button type="submit"
+            class="px-6 py-2 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 shadow transition">
+            Simpan
+          </button>
+        </div>
+      </form>
+    <?php endif; ?>
+  </div>
 </div>

@@ -8,7 +8,7 @@ class Bobot_model extends CI_Model
         $this->db->from('bobot_jurusan');
         $this->db->join('jurusan', 'jurusan.id_jurusan = bobot_jurusan.id_jurusan');
         $this->db->join('kriteria', 'kriteria.id_kriteria = bobot_jurusan.id_kriteria');
-        return $this->db->get()->result();
+        return $this->db->get()->result_array();
     }
 
     public function getBobot()
@@ -17,7 +17,7 @@ class Bobot_model extends CI_Model
         $this->db->from('bobot_jurusan');
         $this->db->join('jurusan', 'jurusan.id_jurusan = bobot_jurusan.id_jurusan');
         $this->db->join('kriteria', 'kriteria.id_kriteria = bobot_jurusan.id_kriteria');
-        return $this->db->get()->result();
+        return $this->db->get()->result_array();
     }
 
 
@@ -28,7 +28,7 @@ class Bobot_model extends CI_Model
         $this->db->join('jurusan', 'jurusan.id_jurusan = bobot_jurusan.id_jurusan');
         $this->db->join('kriteria', 'kriteria.id_kriteria = bobot_jurusan.id_kriteria');
         $this->db->where('id_bobot', $id);
-        return $this->db->get()->row();
+        return $this->db->get()->row_array();
     }
 
     public function insert($data)

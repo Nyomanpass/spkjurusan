@@ -1,24 +1,26 @@
-<div class="px-6 max-w-md mx-auto ">
-  <a href="<?= base_url('jurusan') ?>" class="inline-block text-black hover:text-blue-600 font-semibold">
-    &larr; Kembali ke Daftar Jurusan
-  </a>
-</div>
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+  <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 px-6">
+    <h2 class="text-xl font-bold text-center">Tambah Jurusan</h2>
+  </div>
 
-
-<div class="p-6 max-w-md mx-auto">
-  <div class="bg-white rounded-lg shadow p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Tambah Jurusan</h2>
-
-    <form method="post" action="<?= base_url('jurusan/create') ?>" class="space-y-4">
+  <div class="p-6">
+    <form method="post" action="<?= base_url('jurusan/create') ?>" class="space-y-5">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Jurusan</label>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Jurusan</label>
         <input type="text" name="nama" required
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
+          placeholder="Masukkan nama jurusan">
       </div>
 
-      <div class="flex items-center gap-3 mt-4">
-        <button type="submit" class="w-full mt-4 rounded-lg bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan</button>
-
+      <div class="flex justify-end gap-3 pt-4 border-t">
+        <a onclick="document.getElementById('modalJurusan').classList.add('hidden')"
+          class="px-5 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition">
+          Batal
+        </a>
+        <button type="submit"
+          class="px-6 py-2 rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-700 shadow transition">
+          Simpan
+        </button>
       </div>
     </form>
   </div>

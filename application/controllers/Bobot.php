@@ -14,8 +14,9 @@ class Bobot extends CI_Controller
 
     public function index()
     {
-        $data['bobot'] = $this->Bobot_model->getAll();
+        $data['bobot_list'] = $this->Bobot_model->getAll(); // ganti nama biar jelas
         $data['jurusan'] = $this->Jurusan_model->get_all();
+        $data['kriteria'] = $this->Kriteria_model->get_all();
         $this->load->view('templates/header_dashboard');
         $this->load->view('bobot/index', $data);
         $this->load->view('templates/footer_dashboard');

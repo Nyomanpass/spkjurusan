@@ -35,6 +35,9 @@ class Home extends CI_Controller
         $data['jurusan_list'] = $this->Jurusan_model->get_all();
         $data['kriteria_list'] = $this->Kriteria_model->get_all();
 
+        $data['jurusan'] = $this->Jurusan_model->get_all();
+        $data['kriteria'] = $this->Kriteria_model->get_all();
+
         // Statistik tambahan
         $data['user_info'] = $this->session->userdata();
 

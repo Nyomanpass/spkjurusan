@@ -38,8 +38,7 @@ class Kriteria extends CI_Controller {
     }
 
     public function edit($id) {
-        $data['kriteria'] = $this->Kriteria_model->get_by_id($id);
-
+    
         if ($this->input->post()) {
             $update = [
                 'kode'  => $this->input->post('kode'),

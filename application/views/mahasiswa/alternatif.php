@@ -1,4 +1,4 @@
-<div class="p-6 bg-gray-50 min-h-screen">
+<div class="min-h-screen">
     <div class="max-w-7xl mx-auto">
         <!-- Header Section -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">

@@ -12,6 +12,7 @@ class Mahasiswa extends CI_Controller
         $this->load->model('MataPelajaran_model');
         $this->load->model('Nilai_model');
         $this->load->model('Preferensi_model');
+        $this->load->model('Kriteria_model');
 
         $this->load->library('session');
         $this->load->helper(['url', 'form']);
@@ -67,6 +68,24 @@ class Mahasiswa extends CI_Controller
         $this->Mahasiswa_model->delete($id);
         redirect('mahasiswa');
     }
+
+
+    // --- Delete Prestasi ---
+    public function deletePrestasi($id_prestasi, $id_mahasiswa,)
+    {
+        $this->Prestasi_model->delete($id_prestasi);
+        $this->session->set_flashdata('success', 'Prestasi berhasil dihapus!');
+        redirect('mahasiswa/detail/' . $id_mahasiswa);
+    }
+
+    // --- Delete Tes ---
+    public function deleteTes($id_tes, $id_mahasiswa)
+        {
+            $this->Tes_model->delete($id_tes);
+            $this->session->set_flashdata('success', 'Tes berhasil dihapus!');
+            redirect('mahasiswa/detail/' . $id_mahasiswa);
+        }
+
 
 
     public function detail($id, $type = null, $item_id = null)
@@ -168,147 +187,101 @@ class Mahasiswa extends CI_Controller
     }
 
 
+   public function hitungNilaiChip($id_mahasiswa)
+{
+    $raport = $this->Raport_model->getByMahasiswa($id_mahasiswa);
+    $prestasi = $this->Prestasi_model->getByMahasiswa($id_mahasiswa);
+    $tes = $this->Tes_model->getByMahasiswa($id_mahasiswa);
 
+    $data_nilai = [];
 
+    // Ambil semua kriteria dari database
+    $kriteria_db = $this->db->get('kriteria')->result_array();
 
-    public function hitungNilaiChip($id_mahasiswa)
-    {
-        $raport = $this->Raport_model->getByMahasiswa($id_mahasiswa);
-        $prestasi = $this->Prestasi_model->getByMahasiswa($id_mahasiswa);
-        $tes = $this->Tes_model->getByMahasiswa($id_mahasiswa);
-
-        $data_nilai = [];
-
-        // Ambil kriteria dari database
-        $kriteria_db = $this->db->get('kriteria')->result_array();
-
-        // Map kriteria kode => id
-        $kriteria_map = [];
-        foreach ($kriteria_db as $k) {
-            $kriteria_map[$k['kode']] = $k['id_kriteria'];
-        }
-
-        // Mapel per kode kriteria
-        $mapel_per_kode = [
-            'C1' => [
-                'Pendidikan Agama',
-                'PPkn',
-                'Bahasa Indonesia',
-                'Bahasa Inggris',
-                'Matematika',
-                'Sejarah',
-                'PJOK',
-                'Kimia',
-                'Seni Budaya'
-            ],
-            'C2' => [
-                'Matematika',
-                'Ekonomi',
-                'Bahasa Indonesia',
-                'Bahasa Inggris',
-                'TIK (informatika)',
-                'Kewirausahaan'
-            ],
-            'C3' => [
-                'PPkn',
-                'Bahasa Indonesia',
-                'Bahasa Inggris',
-                'Matematika',
-                'Ekonomi',
-                'TIK (informatika)'
-            ],
-            'C4' => [
-                'Seni Budaya',
-                'Bahasa Indonesia',
-                'Bahasa Inggris',
-                'Matematika',
-                'Fisika',
-                'TIK (informatika)'
-            ],
-        ];
-
-        // Hitung C1 – C6
-        foreach ($mapel_per_kode as $kode => $mapel_list) {
-            if (!isset($kriteria_map[$kode])) continue; // skip jika id kriteria tidak ada
-            $id_kriteria = $kriteria_map[$kode];
-
-            $filter = array_filter($raport, function ($r) use ($mapel_list) {
-                return in_array($r['nama_mapel'], $mapel_list);
-            });
-
-            $nilaiArray = array_map(function ($v) {
-                return isset($v['nilai_akhir']) && is_numeric($v['nilai_akhir']) ? $v['nilai_akhir'] : 0;
-            }, $filter);
-
-            $nilai = count($nilaiArray) ? array_sum($nilaiArray) / count($nilaiArray) : 0; // tidak dibulatkan
-
-            // echo "<pre>";
-            // print_r($nilaiArray);
-            // echo "</pre>";
-
-
-            $data_nilai[] = ['id_mahasiswa' => $id_mahasiswa, 'id_kriteria' => $id_kriteria, 'nilai' => $nilai];
-        }
-
-        // C7 Prestasi Akademik
-        if (isset($kriteria_map['C7'])) {
-            $id_kriteria_c7 = $kriteria_map['C7'];
-            $nilaiTingkat = [
-                'Internasional' => [1 => 16, 2 => 15, 3 => 14, '>=4' => 13],
-                'Nasional'      => [1 => 12, 2 => 11, 3 => 10, '>=4' => 9],
-                'Provinsi'      => [1 => 8, 2 => 7, 3 => 6, '>=4' => 5],
-                'Kabupaten'     => [1 => 4, 2 => 3, 3 => 2, '>=4' => 1],
-            ];
-
-            // echo "<pre>";
-            // print_r($prestasi);
-            // echo "</pre>";
-
-            $nilai_c7 = 0;
-            foreach ($prestasi as $p) {
-                $tingkat = $p['tingkat'];
-                $juara = $p['juara'];
-                if (isset($nilaiTingkat[$tingkat])) {
-                    $nilai_c7 += $juara >= 4 ? $nilaiTingkat[$tingkat]['>=4'] : ($nilaiTingkat[$tingkat][$juara] ?? 0);
-                }
-            }
-
-            // echo "<pre>";
-            // print_r($nilai_c7);
-            // echo "</pre>";
-
-            $data_nilai[] = ['id_mahasiswa' => $id_mahasiswa, 'id_kriteria' => $id_kriteria_c7, 'nilai' => $nilai_c7];
-        }
-
-
-        if (isset($kriteria_map['C8']) && !empty($tes)) {
-            $id_kriteria_c8 = $kriteria_map['C8'];
-
-            // Ambil row pertama dari result_array()
-            $tes_data = $tes[0];
-            // echo "<pre>";
-            // print_r($tes_data);
-            // echo "</pre>";
-
-            $iq = isset($tes_data['iq']) && is_numeric($tes_data['iq']) ? $tes_data['iq'] : 0;
-            $wawancara = isset($tes_data['wawancara']) && is_numeric($tes_data['wawancara']) ? $tes_data['wawancara'] : 0;
-
-            // Ambil rata-rata
-            $nilai_c8 = ($iq + $wawancara) / 2;
-            // echo "<pre>";
-            // print_r($nilai_c8);
-            // echo "</pre>";
-            $data_nilai[] = ['id_mahasiswa' => $id_mahasiswa, 'id_kriteria' => $id_kriteria_c8, 'nilai' => $nilai_c8];
-        }
-
-
-        // Simpan batch ke tabel nilai
-        $this->Nilai_model->insert_batch($data_nilai);
-
-        return true;
+    // Map kriteria id => info lengkap
+    $kriteria_map = [];
+    foreach ($kriteria_db as $k) {
+        $kriteria_map[$k['id_kriteria']] = $k;
     }
 
+    // Ambil mapel per kriteria dari tabel kriteria_mapel
+    $mapel_per_kriteria = $this->Kriteria_model->getMapelPerKriteria(); 
+    // Format: [id_kriteria => ['mapel1', 'mapel2', ...]]
 
+    // ===== Hitung nilai untuk kriteria yang terkait mapel (C1–C6) =====
+    foreach ($mapel_per_kriteria as $id_kriteria => $mapel_list) {
+        $filter = array_filter($raport, function ($r) use ($mapel_list) {
+            return in_array($r['nama_mapel'], $mapel_list);
+        });
+
+        $nilaiArray = array_map(function ($v) {
+            return isset($v['nilai_akhir']) && is_numeric($v['nilai_akhir']) ? $v['nilai_akhir'] : 0;
+        }, $filter);
+
+        $nilai = count($nilaiArray) ? array_sum($nilaiArray) / count($nilaiArray) : 0;
+
+        $data_nilai[] = [
+            'id_mahasiswa' => $id_mahasiswa,
+            'id_kriteria' => $id_kriteria,
+            'nilai' => $nilai
+        ];
+    }
+
+    // ===== Hitung nilai prestasi akademik =====
+    // Ambil semua kriteria tipe prestasi dari database
+    $prestasi_kriteria = array_filter($kriteria_map, function($k){
+        return strtolower($k['nama']) === 'point prestasi akademik';
+    });
+
+    foreach ($prestasi_kriteria as $id_kriteria => $k) {
+        // Ambil nilai tingkat dari tabel prestasi_nilai
+        $nilaiTingkat = $this->Kriteria_model->getNilaiTingkat(); 
+        // Format: [tingkat => [juara => nilai]]
+
+        $nilai_c = 0;
+        foreach ($prestasi as $p) {
+            $tingkat = $p['tingkat'];
+            $juara = $p['juara'];
+            if (isset($nilaiTingkat[$tingkat])) {
+                $nilai_c += $juara >= 4 ? ($nilaiTingkat[$tingkat]['>=4'] ?? 0) : ($nilaiTingkat[$tingkat][$juara] ?? 0);
+            }
+        }
+
+        $data_nilai[] = [
+            'id_mahasiswa' => $id_mahasiswa,
+            'id_kriteria' => $id_kriteria,
+            'nilai' => $nilai_c
+        ];
+    }
+
+    // ===== Hitung nilai tes dan wawancara =====
+    $tes_kriteria = array_filter($kriteria_map, function($k){
+        return strtolower($k['nama']) === 'hasil tes dan wawancara';
+    });
+
+    foreach ($tes_kriteria as $id_kriteria => $k) {
+        if (!empty($tes)) {
+            $tes_data = $tes[0];
+            $iq = isset($tes_data['iq']) && is_numeric($tes_data['iq']) ? $tes_data['iq'] : 0;
+            $wawancara = isset($tes_data['wawancara']) && is_numeric($tes_data['wawancara']) ? $tes_data['wawancara'] : 0;
+            $nilai_c = ($iq + $wawancara) / 2;
+
+            $data_nilai[] = [
+                'id_mahasiswa' => $id_mahasiswa,
+                'id_kriteria' => $id_kriteria,
+                'nilai' => $nilai_c
+            ];
+        }
+    }
+
+    // ===== Simpan semua nilai ke tabel =====
+    $this->Nilai_model->saveOrUpdateBatch($data_nilai);
+
+    return true;
+}
+
+
+ 
     public function alternatif()
     {
         $dataNilai = $this->Nilai_model->getNilaiAlternatif();
@@ -362,17 +335,6 @@ class Mahasiswa extends CI_Controller
     }
 
 
-    public function rekomendasi($id_mahasiswa)
-    {
-
-        $data['ranking'] = $this->Preferensi_model->getPreferensiMahasiswa($id_mahasiswa);
-        $data['mahasiswa'] = $this->Mahasiswa_model->getById($id_mahasiswa);
-        $data['rekomendasi'] = $this->Preferensi_model->getRekomendasiJurusan($id_mahasiswa);
-
-        $this->load->view('templates/header_dashboard', $data);
-        $this->load->view('mahasiswa/rekomendasi', $data);
-        $this->load->view('templates/footer_dashboard', $data);
-    }
 
     public function preferensi($id_mahasiswa)
     {
@@ -387,4 +349,8 @@ class Mahasiswa extends CI_Controller
         $this->load->view('mahasiswa/preferensi', $data);
         $this->load->view('templates/footer_dashboard', $data);
     }
+
+
+    
 }
+

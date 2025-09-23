@@ -1,12 +1,21 @@
-<!--back button--->
-<a href="<?= base_url('mahasiswa') ?>" class="inline-block mb-4 text-black hover:text-blue-600 font-semibold">
-    &larr; Kembali ke Daftar Mahasiswa
-</a>
+<?php if (!empty($preferensi)): ?>
+    <?php 
+        // cari nilai tertinggi
+        $maxNilai = max(array_column($preferensi, 'nilai')); 
 
-<div class="p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">
-        Hasil Preferensi Siswa: <?= $mahasiswa['nama_siswa']; ?>
-    </h2>
+        // urutkan preferensi dari nilai tertinggi ke terendah
+        usort($preferensi, function($a, $b) {
+            return $b['nilai'] <=> $a['nilai'];
+        });
+    ?>
+
+    <?php if (!empty($mahasiswa)): ?>
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800">Hasil Preferensi untuk Mahasiswa</h2>
+            <p class="text-gray-600">Nama: <span class="font-medium text-gray-900"><?= $mahasiswa['nama_siswa']; ?></span></p>
+            <p class="text-gray-600">NIM: <span class="font-medium text-gray-900"><?= $mahasiswa['nisn']; ?></span></p>
+        </div>
+    <?php endif; ?>
 
     <div class="overflow-x-auto">
         <table class="min-w-full border-collapse bg-white shadow-sm rounded-lg overflow-hidden">
@@ -18,10 +27,19 @@
             </thead>
             <tbody>
                 <?php foreach ($preferensi as $index => $row): ?>
+                    <?php $isMax = ($row['nilai'] == $maxNilai); ?>
                     <tr class="<?= $index % 2 == 0 ? 'bg-gray-50' : 'bg-white' ?> hover:bg-blue-50 transition-colors">
-                        <td class="border border-gray-300 px-6 py-4 text-gray-700"><?= $row['jurusan']; ?></td>
+                        <td class="border border-gray-300 px-6 py-4 text-gray-700">
+                            <?= $row['jurusan']; ?>
+                            <?php if ($isMax): ?>
+                                <span class="ml-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
+                                    Rekomendasi
+                                </span>
+                            <?php endif; ?>
+                        </td>
                         <td class="border border-gray-300 px-6 py-4 text-center">
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">
+                            <span class="px-3 py-1 rounded-full font-medium
+                                <?= $isMax ? 'bg-green-200 text-green-900' : 'bg-blue-100 text-blue-800' ?>">
                                 <?= number_format($row['nilai'], 3); ?>
                             </span>
                         </td>
@@ -30,4 +48,6 @@
             </tbody>
         </table>
     </div>
-</div>
+<?php else: ?>
+    <p class="text-gray-500 italic">Preferensi belum dihitung untuk siswa ini.</p>
+<?php endif; ?>

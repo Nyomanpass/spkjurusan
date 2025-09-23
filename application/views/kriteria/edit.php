@@ -1,42 +1,48 @@
-<div class="min-h-screen bg-gray-50 py-8">
-  <div class="max-w-md mx-auto ">
-    <a href="<?= base_url('kriteria') ?>" class="inline-block mb-4 text-black hover:text-blue-600 font-semibold">
-      &larr; Kembali ke Daftar Kriteria
-    </a>
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden w-full">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-4 px-6">
+    <h2 class="text-xl font-bold text-center">Edit Kriteria</h2>
   </div>
-  <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Kriteria</h2>
 
-    <form method="post" class="space-y-4">
+  <!-- Body -->
+  <div class="p-6">
+    <form method="post" action="<?= base_url('kriteria/edit/'.$kriteria['id_kriteria']) ?>" class="space-y-5">
+      <!-- hidden id -->
+      <input type="hidden" name="id_kriteria" value="<?= $kriteria['id_kriteria'] ?>">
+
+      <!-- Kode -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Kode</label>
-        <input type="text"
-          name="kode"
-          value="<?= $kriteria->kode ?>"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+        <label class="block text-sm font-semibold text-gray-700 mb-2">Kode</label>
+        <input type="text" name="kode" value="<?= $kriteria['kode'] ?>" required
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition">
       </div>
 
+      <!-- Nama -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
-        <input type="text"
-          name="nama"
-          value="<?= $kriteria->nama ?>"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+        <label class="block text-sm font-semibold text-gray-700 mb-2">Nama</label>
+        <input type="text" name="nama" value="<?= $kriteria['nama'] ?>" required
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition">
       </div>
 
+      <!-- Sifat -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Sifat</label>
-        <select name="sifat"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
-          <option value="benefit" <?= $kriteria->sifat == 'benefit' ? 'selected' : '' ?>>Benefit</option>
-          <option value="cost" <?= $kriteria->sifat == 'cost' ? 'selected' : '' ?>>Cost</option>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">Sifat</label>
+        <select name="sifat" required
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition">
+          <option value="benefit" <?= $kriteria['sifat'] == 'benefit' ? 'selected' : '' ?>>Benefit</option>
+          <option value="cost" <?= $kriteria['sifat'] == 'cost' ? 'selected' : '' ?>>Cost</option>
         </select>
       </div>
 
-      <div class="pt-4">
+      <!-- Tombol -->
+      <div class="flex justify-end gap-3 pt-4 border-t">
+        <a href="<?= base_url('kriteria') ?>"
+          class="px-5 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition">
+          Batal
+        </a>
         <button type="submit"
-          class="w-full bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">
-          Update Kriteria
+          class="px-6 py-2 rounded-lg bg-yellow-600 text-white font-semibold hover:bg-yellow-700 shadow transition">
+          Update
         </button>
       </div>
     </form>

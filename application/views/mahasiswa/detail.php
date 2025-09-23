@@ -151,13 +151,19 @@
                     </select>
                 </div>
 
-                <div>
+               <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Juara</label>
-                    <input type="text" name="juara"
+                    <select name="juara"
                         class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                        value="<?= $edit_prestasi['juara'] ?? '' ?>"
-                        placeholder="Contoh: Juara 1" required>
+                        required>
+                        <option value="">-- Pilih Juara --</option>
+                        <option value="1" <?= (isset($edit_prestasi['juara']) && $edit_prestasi['juara'] == 1) ? 'selected' : '' ?>>Juara 1</option>
+                        <option value="2" <?= (isset($edit_prestasi['juara']) && $edit_prestasi['juara'] == 2) ? 'selected' : '' ?>>Juara 2</option>
+                        <option value="3" <?= (isset($edit_prestasi['juara']) && $edit_prestasi['juara'] == 3) ? 'selected' : '' ?>>Juara 3</option>
+                        <option value=">=4" <?= (isset($edit_prestasi['juara']) && $edit_prestasi['juara'] == '>=4') ? 'selected' : '' ?>>Juara ≥ 4</option>
+                    </select>
                 </div>
+
 
                 <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
                     <?= $edit_prestasi ? "Update Prestasi" : "Simpan Prestasi" ?>
@@ -294,7 +300,7 @@
                                                 class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition duration-200">
                                                 Edit
                                             </a>
-                                            <a href="<?= base_url('mahasiswa/delete_prestasi/' . $p['id_prestasi'] . '/' . $id_mahasiswa) ?>"
+                                            <a href="<?= base_url('mahasiswa/deletePrestasi/' . $p['id_prestasi'] . '/' . $id_mahasiswa) ?>"
                                                 onclick="return confirm('Yakin hapus data ini?')"
                                                 class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition duration-200">
                                                 Hapus
@@ -348,7 +354,7 @@
                                                 class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition duration-200">
                                                 Edit
                                             </a>
-                                            <a href="<?= base_url('mahasiswa/delete_tes/' . ($row['id_tes'] ?? '') . '/' . $id_mahasiswa) ?>"
+                                            <a href="<?= base_url('mahasiswa/deleteTes/' . ($row['id_tes'] ?? '') . '/' . $id_mahasiswa) ?>"
                                                 onclick="return confirm('Yakin hapus data ini?')"
                                                 class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition duration-200">
                                                 Hapus

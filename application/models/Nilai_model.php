@@ -14,6 +14,26 @@ class Nilai_model extends CI_Model {
     {
         return $this->db->insert_batch($this->table, $data);
     }
+
+    public function saveOrUpdateBatch($data)
+    {
+        foreach ($data as $row) {
+            $exists = $this->db->get_where($this->table, [
+                'id_mahasiswa' => $row['id_mahasiswa'],
+                'id_kriteria'  => $row['id_kriteria']
+            ])->row_array();
+
+            if ($exists) {
+                // update nilai
+                $this->db->where('id_mahasiswa', $row['id_mahasiswa']);
+                $this->db->where('id_kriteria', $row['id_kriteria']);
+                $this->db->update($this->table, ['nilai' => $row['nilai']]);
+            } else {
+                // insert nilai baru
+                $this->db->insert($this->table, $row);
+            }
+        }
+    }
     
   public function getNilaiAlternatif()
     {
@@ -77,12 +97,11 @@ class Nilai_model extends CI_Model {
         $this->load->model('Bobot_model');
         $bobotJurusan = $this->Bobot_model->getBobot();
 
-        // 3. Susun bobot per jurusan
-        $jurusanBobot = [];
         foreach ($bobotJurusan as $b) {
-            $jurusanBobot[$b->id_jurusan][$b->kode_kriteria] = $b->bobot;
-            $jurusanNama[$b->id_jurusan] = $b->jurusan;
+            $jurusanBobot[$b['id_jurusan']][$b['kode_kriteria']] = $b['bobot'];
+            $jurusanNama[$b['id_jurusan']] = $b['jurusan'];
         }
+
 
         // 4. Hitung preferensi (Σ normalisasi * bobot)
         $preferensi = [];
