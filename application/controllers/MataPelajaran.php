@@ -27,7 +27,7 @@ class MataPelajaran extends CI_Controller {
                 'nama_mapel' => $this->input->post('nama_mapel')
             ];
             $this->MataPelajaran_model->insert($data);
-            redirect('mataPelajaran');
+            redirect('setting');
         }
 
         $this->load->view('templates/header_dashboard');
@@ -43,7 +43,7 @@ class MataPelajaran extends CI_Controller {
                 'nama_mapel' => $this->input->post('nama_mapel')
             ];
             $this->MataPelajaran_model->update($id, $data);
-            redirect('mataPelajaran');
+            redirect('setting');
         }
 
         $data['mapel'] = $this->MataPelajaran_model->getById($id);
@@ -57,6 +57,6 @@ class MataPelajaran extends CI_Controller {
     public function delete($id)
     {
         $this->MataPelajaran_model->delete($id);
-        redirect('mataPelajaran');
+        redirect('setting');
     }
 }

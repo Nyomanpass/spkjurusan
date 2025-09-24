@@ -1,8 +1,8 @@
 <div class="min-h-screen">
-  <div class="max-w-7xl mx-auto">
+  <div class="">
     <!-- Header Section -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-      <div class="text-center md:text-left">
+      <div class="text-left">
         <h2 class="text-2xl font-bold text-gray-800 mb-1">Tabel Data Siswa</h2>
         <p class="text-gray-600 text-sm">Daftar siswa yang terdaftar di sistem</p>
       </div>

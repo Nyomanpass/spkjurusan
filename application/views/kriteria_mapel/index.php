@@ -1,4 +1,4 @@
-<div class="max-w-6xl mx-auto">
+<div class="">
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Data Kriteria & Mapel</h1>
     <a onclick="document.getElementById('modalKriteriaMapel').classList.remove('hidden')"
@@ -9,7 +9,7 @@
 
   <?php foreach ($kriteria_mapel as $row): ?>
     <div class="bg-white rounded-xl shadow-lg mb-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-4">
+      <div class="bg-gradient-to-r from-gray-600 to-gray-700 px-6 py-4">
         <h2 class="text-white font-semibold flex items-center">
             <i class="fas fa-list mr-2"></i> 
             <?= $row['kriteria'] ?> (<?= $row['kode'] ?>)
@@ -28,13 +28,15 @@
               <tr class="hover:bg-gray-50 transition">
                 <td class="px-4 py-3 text-sm text-gray-800"><?= $m['nama_mapel'] ?></td>
                 <td class="px-4 py-3 text-center">
-                   <a onclick="document.getElementById('modalEdit<?= $m['id'] ?>').classList.remove('hidden')" 
-                        class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs flex items-center">
-                        <i class="fas fa-edit mr-1"></i>Edit
-                    </a>
-                  <a href="<?= base_url("kriteriaMapel/delete/{$m['id']}") ?>"
-                    onclick="return confirm('Yakin hapus mapel ini?')"
-                    class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs">Hapus</a>
+                  <div class="flex justify-center space-x-2">
+                    <a onclick="document.getElementById('modalEdit<?= $m['id'] ?>').classList.remove('hidden')" 
+                          class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs flex items-center">
+                          <i class="fas fa-edit mr-1"></i>Edit
+                      </a>
+                    <a href="<?= base_url("kriteriaMapel/delete/{$m['id']}") ?>"
+                      onclick="return confirm('Yakin hapus mapel ini?')"
+                      class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs">Hapus</a>
+                  </div>
                 </td>
               </tr>
 

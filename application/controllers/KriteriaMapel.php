@@ -49,7 +49,7 @@ class KriteriaMapel extends CI_Controller
             ];
 
             $this->KriteriaMapel_model->update($id, $data);
-            redirect('kriteriaMapel');
+            redirect('setting');
         }
 
         // ambil data untuk form edit

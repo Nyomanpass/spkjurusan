@@ -1,5 +1,5 @@
 <?php if ($this->session->flashdata('success')): ?>
-    <div class="max-w-6xl mx-auto p-4 mb-6 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+    <div class="p-4 mb-6 bg-green-100 border border-green-400 text-green-700 rounded-lg">
         <div class="flex items-center">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -9,14 +9,14 @@
     </div>
 <?php endif; ?>
 
-<div class="max-w-6xl mx-auto ">
+<div class="">
     <a href="<?= base_url('mahasiswa') ?>" class="inline-block mb-4 text-black hover:text-blue-600 font-semibold">
         &larr; Kembali ke Daftar Mahasiswa
     </a>
 </div>
 
 <!-- Detail Mahasiswa -->
-<div class="max-w-6xl mx-auto mb-6">
+<div class="mb-6">
     <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-t-lg">
         <h1 class="text-3xl font-bold">Detail Mahasiswa</h1>
     </div>
@@ -41,7 +41,7 @@
 </div>
 
 <!-- Grid Layout untuk Form -->
-<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 ">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 ">
 
     <!-- Input Data Raport -->
     <div class="bg-white rounded-lg shadow-lg border border-gray-200">
@@ -174,7 +174,7 @@
 </div>
 
 <!-- Input Tes -->
-<div class="max-w-6xl mx-auto mb-6">
+<div class="mb-6">
     <div class="bg-white rounded-lg shadow-lg border border-gray-200">
         <div class="text-green-600 border-b-4 border-gray-200 p-4 rounded-t-lg">
             <h3 class="text-xl font-semibold flex items-center">
@@ -219,7 +219,7 @@
 </div>
 
 <!-- Data Tables Section -->
-<div class="max-w-6xl mx-auto space-y-6 mt-16">
+<div class="space-y-6 mt-16">
 
     <!-- Data Raport -->
     <div class="bg-white rounded-lg shadow-lg border border-gray-200">
@@ -379,7 +379,7 @@
 </div>
 
 <!-- Action Button -->
-<div class="max-w-6xl mx-auto mt-8 mb-8">
+<div class="mt-8 mb-8">
     <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
         <div class="text-center">
             <h4 class="text-lg font-semibold text-gray-800 mb-4">Proses Perhitungan</h4>

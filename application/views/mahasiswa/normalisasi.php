@@ -1,5 +1,5 @@
 <div class="min-h-screen">
-  <div class="max-w-6xl mx-auto">
+  <div class="">
     <!-- Tombol Kembali -->
     <div class="mb-4">
       <a href="<?= base_url('mahasiswa/alternatif') ?>" 

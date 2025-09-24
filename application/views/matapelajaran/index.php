@@ -1,13 +1,23 @@
-<div class="max-w-4xl mx-auto">
+<div class="mb-10">
+  <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Data Mata Pelajaran</h1>
     <a onclick="document.getElementById('modalmatapelajaran').classList.remove('hidden')"
-            class="inline-flex items-center px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
-            + Tambah
+      class="inline-flex items-center px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+      <i class="fas fa-plus mr-2"></i> Tambah
     </a>
   </div>
 
+  <!-- Card -->
   <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+    <!-- Card Header -->
+    <div class="bg-gradient-to-r from-gray-600 to-gray-700 px-6 py-4">
+      <h2 class="text-white font-semibold flex items-center">
+        <i class="fas fa-book mr-2"></i> Daftar Mata Pelajaran
+      </h2>
+    </div>
+
+    <!-- Table -->
     <table class="w-full border-collapse">
       <thead class="bg-gray-100">
         <tr>
@@ -22,34 +32,37 @@
             <td class="px-4 py-3 text-sm text-gray-800"><?= $m['id_mapel'] ?></td>
             <td class="px-4 py-3 text-sm font-medium text-gray-900"><?= $m['nama_mapel'] ?></td>
             <td class="px-4 py-3 text-center">
-              <a onclick="document.getElementById('modalEditmapel<?= $m['id_mapel'] ?>').classList.remove('hidden')"
-                      class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs transition duration-200 flex items-center">
-                      <i class="fas fa-edit mr-1"></i>Edit
-                    </a>
-              <a href="<?= base_url('mataPelajaran/delete/'.$m['id_mapel']) ?>"
-                 onclick="return confirm('Yakin hapus mapel ini?')"
-                 class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs inline-block">
-                 <i class="fas fa-trash mr-1"></i> Hapus
-              </a>
+              <div class="flex justify-center space-x-2">
+                <!-- Tombol Edit -->
+                <a onclick="document.getElementById('modalEditmapel<?= $m['id_mapel'] ?>').classList.remove('hidden')"
+                  class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-xs transition duration-200 flex items-center">
+                  <i class="fas fa-edit mr-1"></i>Edit
+                </a>
+                <!-- Tombol Hapus -->
+                <a href="<?= base_url('mataPelajaran/delete/'.$m['id_mapel']) ?>"
+                  onclick="return confirm('Yakin hapus mapel ini?')"
+                  class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs flex items-center">
+                  <i class="fas fa-trash mr-1"></i> Hapus
+                </a>
+              </div>
             </td>
           </tr>
 
+          <!-- Modal Edit -->
           <div id="modalEditmapel<?= $m['id_mapel'] ?>" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/75">
-                <div class="rounded-xl w-full max-w-2xl p-6 relative">
-                  <?php $this->load->view('matapelajaran/edit', ['mapel' => $m]); ?>
-                </div>
-              </div>
-
+            <div class="rounded-xl w-full max-w-2xl p-6 relative shadow-lg">
+              <?php $this->load->view('matapelajaran/edit', ['mapel' => $m]); ?>
+            </div>
+          </div>
         <?php endforeach; ?>
       </tbody>
     </table>
   </div>
 </div>
 
-
 <!-- Modal Tambah -->
 <div id="modalmatapelajaran" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/75">
-  <div class="rounded-xl w-full max-w-2xl p-6 relative">
+  <div class="rounded-xl w-full max-w-2xl p-6 relative shadow-lg">
     <?php $this->load->view('matapelajaran/create'); ?>
   </div>
 </div>

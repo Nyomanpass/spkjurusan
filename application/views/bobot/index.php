@@ -1,5 +1,5 @@
-<div class="min-h-screen  v">
-  <div class="max-w-6xl mx-auto">
+<div class="min-h-screen">
+  <div class="">
 
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4">
