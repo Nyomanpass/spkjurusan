@@ -32,7 +32,7 @@
 
       <a href="<?= base_url('mahasiswa') ?>"
         class="flex items-center px-4 py-3 rounded-lg transition <?= uri_string() == 'mahasiswa' ? 'bg-gray-700' : 'hover:bg-gray-700' ?>">
-        <i class="fas fa-user-graduate w-5 mr-3"></i> Mahasiswa
+        <i class="fas fa-user-graduate w-5 mr-3"></i> Siswa
       </a>
 
       <a href="<?= base_url('kriteria') ?>"

@@ -1,7 +1,7 @@
 <div class="max-w-3xl bg-white mx-auto rounded-2xl shadow-lg overflow-hidden">
     <!-- Header -->
     <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-4 px-6">
-        <h2 class="text-xl font-bold text-center">Tambah Mahasiswa</h2>
+        <h2 class="text-xl font-bold text-center">Tambah Siswa</h2>
     </div>
 
     <!-- Form -->

@@ -11,14 +11,14 @@
 
 <div class="">
     <a href="<?= base_url('mahasiswa') ?>" class="inline-block mb-4 text-black hover:text-blue-600 font-semibold">
-        &larr; Kembali ke Daftar Mahasiswa
+        &larr; Kembali ke Daftar Siswa
     </a>
 </div>
 
 <!-- Detail Mahasiswa -->
 <div class="mb-6">
     <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-t-lg">
-        <h1 class="text-3xl font-bold">Detail Mahasiswa</h1>
+        <h1 class="text-3xl font-bold">Detail Siswa</h1>
     </div>
     <div class="bg-white p-6 rounded-b-lg shadow-lg border border-gray-200">
         <?php if ($mahasiswa): ?>

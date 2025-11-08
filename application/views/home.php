@@ -18,7 +18,7 @@
     <div class="bg-white shadow-lg rounded-xl p-6 border-l-4 border-blue-500 hover:shadow-xl transition">
       <div class="flex items-center">
         <div class="flex-1">
-          <p class="text-sm text-gray-500">Total Mahasiswa</p>
+          <p class="text-sm text-gray-500">Total Siswa</p>
           <p class="text-3xl font-bold text-gray-800"><?= $total_mahasiswa ?? 0 ?></p>
         </div>
         <div class="p-3 bg-blue-100 text-blue-600 rounded-full text-2xl">
@@ -123,7 +123,7 @@
       <button onclick="document.getElementById('modalMahasiswa').classList.remove('hidden')"
         class="bg-white border hover:border-blue-500 hover:bg-blue-50 text-gray-700 p-6 rounded-xl text-center shadow transition w-full">
         <div class="text-3xl mb-2 text-blue-600"><i class="fas fa-user-plus"></i></div>
-        <div class="font-medium">Tambah Mahasiswa</div>
+        <div class="font-medium">Tambah Siswa</div>
       </button>
 
       <a onclick="document.getElementById('modalJurusan').classList.remove('hidden')" class="bg-white border hover:border-orange-500 hover:bg-orange-50 text-gray-700 p-6 rounded-xl text-center shadow transition">
