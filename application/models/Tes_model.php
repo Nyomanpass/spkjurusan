@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tes_model extends CI_Model {
 
-   public function getByMahasiswa($id_mahasiswa)
+   public function getBySiswa($id_siswa)
     {
-        return $this->db->get_where('tes', ['id_mahasiswa' => $id_mahasiswa])->result_array();
+        return $this->db->get_where('tes', ['id_siswa' => $id_siswa])->result_array();
     }
 
     public function insert($data)

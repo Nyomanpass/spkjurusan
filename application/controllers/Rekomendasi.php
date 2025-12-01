@@ -6,21 +6,21 @@ class Rekomendasi extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Mahasiswa_model');
+        $this->load->model('Siswa_model');
         $this->load->model('Nilai_model');
     }
 
  public function index()
 {
-    // Ambil semua mahasiswa
-    $mahasiswaList = $this->Mahasiswa_model->get_all();
+    // Ambil semua siswa
+    $siswaList = $this->Siswa_model->get_all();
 
     $data['hasil'] = [];
     $cocok = 0;
     $tidakCocok = 0;
 
-    foreach ($mahasiswaList as $mhs) {
-        $preferensi = $this->Nilai_model->hitung_preferensi($mhs['id_mahasiswa']);
+    foreach ($siswaList as $mhs) {
+        $preferensi = $this->Nilai_model->hitung_preferensi($mhs['id_siswa']);
 
         if (!empty($preferensi)) {
             // cari nilai tertinggi (rekomendasi)

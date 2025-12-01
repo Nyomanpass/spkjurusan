@@ -10,7 +10,7 @@ class Home extends CI_Controller
         $this->load->library('session');
         $this->load->helper('url');
 
-        $this->load->model('Mahasiswa_model');
+        $this->load->model('Siswa_model');
         $this->load->model('Jurusan_model');
         $this->load->model('Kriteria_model');
         $this->load->model('Bobot_model');
@@ -26,7 +26,7 @@ class Home extends CI_Controller
         $data['title'] = 'Dashboard';
 
         // Statistik Utama
-        $data['total_mahasiswa'] = $this->Mahasiswa_model->count_all();
+        $data['total_siswa'] = $this->Siswa_model->count_all();
         $data['total_jurusan'] = $this->Jurusan_model->count_all();
         $data['total_kriteria'] = $this->Kriteria_model->count_all();
         $data['total_bobot'] = $this->Bobot_model->count_all();

@@ -10,31 +10,31 @@
 <?php endif; ?>
 
 <div class="">
-    <a href="<?= base_url('mahasiswa') ?>" class="inline-block mb-4 text-black hover:text-blue-600 font-semibold">
+    <a href="<?= base_url('siswa') ?>" class="inline-block mb-4 text-black hover:text-blue-600 font-semibold">
         &larr; Kembali ke Daftar Siswa
     </a>
 </div>
 
-<!-- Detail Mahasiswa -->
+<!-- Detail siswa -->
 <div class="mb-6">
     <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-t-lg">
         <h1 class="text-3xl font-bold">Detail Siswa</h1>
     </div>
     <div class="bg-white p-6 rounded-b-lg shadow-lg border border-gray-200">
-        <?php if ($mahasiswa): ?>
+        <?php if ($siswa): ?>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-gray-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">Nama Lengkap</p>
-                    <p class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($mahasiswa['nama_siswa']) ?></p>
+                    <p class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($siswa['nama_siswa']) ?></p>
                 </div>
                 <div class="bg-gray-50 p-4 rounded-lg">
-                    <p class="text-sm text-gray-600 mb-1">Nomor Induk Mahasiswa</p>
-                    <p class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($mahasiswa['nisn']) ?></p>
+                    <p class="text-sm text-gray-600 mb-1">Nomor Induk siswa</p>
+                    <p class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($siswa['nisn']) ?></p>
                 </div>
             </div>
         <?php else: ?>
             <div class="text-center py-8">
-                <p class="text-gray-500 text-lg">Data mahasiswa tidak ditemukan.</p>
+                <p class="text-gray-500 text-lg">Data siswa tidak ditemukan.</p>
             </div>
         <?php endif; ?>
     </div>
@@ -187,7 +187,7 @@
         <div class="p-6">
             <form method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="hidden" name="submit_tes" value="1">
-                <input type="hidden" name="id_mahasiswa" value="<?= $id_mahasiswa ?>">
+                <input type="hidden" name="id_siswa" value="<?= $id_siswa ?>">
                 <?php if ($edit_tes): ?>
                     <input type="hidden" name="id_tes" value="<?= $edit_tes['id_tes'] ?>">
                 <?php endif; ?>
@@ -236,6 +236,7 @@
                                 <th class="border border-gray-300 p-3 text-center font-semibold text-gray-700">Pengetahuan</th>
                                 <th class="border border-gray-300 p-3 text-center font-semibold text-gray-700">Keterampilan</th>
                                 <th class="border border-gray-300 p-3 text-center font-semibold text-gray-700">Nilai Akhir</th>
+                                <th class="border border-gray-300 p-3 text-center font-semibold text-gray-700">Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -251,6 +252,12 @@
                                     <td class="border border-gray-300 p-3 text-center">
                                         <span class="inline-block bg-purple-100 text-purple-800 px-2 py-1 rounded font-semibold"><?= htmlspecialchars($r['nilai_akhir']) ?></span>
                                     </td>
+                                    <td class="border border-gray-300 p-3 text-center">
+                                        <span class="inline-block bg-yellow-100 text-yellow-800 px-2 py-1 rounded font-semibold">
+                                            <?= htmlspecialchars($r['keterangan'] ?? '-') ?>
+                                        </span>
+                                    </td>
+
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -296,11 +303,11 @@
                                     </td>
                                     <td class="border border-gray-300 p-3 text-center">
                                         <div class="flex justify-center space-x-2">
-                                            <a href="<?= base_url('mahasiswa/detail/' . $id_mahasiswa . '/prestasi/' . $p['id_prestasi']) ?>"
+                                            <a href="<?= base_url('siswa/detail/' . $id_siswa . '/prestasi/' . $p['id_prestasi']) ?>"
                                                 class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition duration-200">
                                                 Edit
                                             </a>
-                                            <a href="<?= base_url('mahasiswa/deletePrestasi/' . $p['id_prestasi'] . '/' . $id_mahasiswa) ?>"
+                                            <a href="<?= base_url('siswa/deletePrestasi/' . $p['id_prestasi'] . '/' . $id_siswa) ?>"
                                                 onclick="return confirm('Yakin hapus data ini?')"
                                                 class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition duration-200">
                                                 Hapus
@@ -330,42 +337,66 @@
         </div>
         <div class="p-6">
             <?php if (!empty($tes)): ?>
-                <div class="overflow-x-auto">
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="bg-gray-50">
-                                <th class="border border-gray-300 p-3 text-center font-semibold text-gray-700">Nilai IQ</th>
-                                <th class="border border-gray-300 p-3 text-center font-semibold text-gray-700">Nilai Wawancara</th>
-                                <th class="border border-gray-300 p-3 text-center font-semibold text-gray-700">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($tes as $row): ?>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="border border-gray-300 p-3 text-center">
-                                        <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded font-semibold"><?= htmlspecialchars($row['iq'] ?? '') ?></span>
-                                    </td>
-                                    <td class="border border-gray-300 p-3 text-center">
-                                        <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded font-semibold"><?= htmlspecialchars($row['wawancara'] ?? '') ?></span>
-                                    </td>
-                                    <td class="border border-gray-300 p-3 text-center">
-                                        <div class="flex justify-center space-x-2">
-                                            <a href="<?= base_url('mahasiswa/detail/' . $id_mahasiswa . '/tes/' . $row['id_tes']) ?>"
-                                                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition duration-200">
-                                                Edit
-                                            </a>
-                                            <a href="<?= base_url('mahasiswa/deleteTes/' . ($row['id_tes'] ?? '') . '/' . $id_mahasiswa) ?>"
-                                                onclick="return confirm('Yakin hapus data ini?')"
-                                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition duration-200">
-                                                Hapus
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-700">Nilai IQ</th>
+                <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-700">Nilai Wawancara</th>
+                <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-700">Keterangan IQ</th>
+                <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-700">Keterangan Wawancara</th>
+                <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-700">Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-200 bg-white">
+            <?php foreach ($tes as $row): ?>
+                <tr class="hover:bg-indigo-50 transition duration-150 ease-in-out">
+
+                    <td class="whitespace-nowrap px-6 py-4 text-center">
+                        <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800">
+                            <?= htmlspecialchars($row['iq'] ?? '-') ?>
+                        </span>
+                    </td>
+
+                    <td class="whitespace-nowrap px-6 py-4 text-center">
+                        <span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-800">
+                            <?= htmlspecialchars($row['wawancara'] ?? '-') ?>
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        <div class="text-center">
+                            <?= $row['ket_iq'] ?? '-' ?>
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        <div class="text-center">
+                            <?= $row['ket_wawancara'] ?? '-' ?>
+                        </div>
+                    </td>
+
+                   <td class="whitespace-nowrap px-6 py-4 text-center">
+                        <div class="flex justify-center space-x-3">
+                            
+                            <a href="<?= base_url('siswa/detail/' . $id_siswa . '/tes/' . $row['id_tes']) ?>"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition duration-200">
+                                Edit
+                            </a> <a href="<?= base_url('siswa/deleteTes/' . ($row['id_tes'] ?? '') . '/' . $id_siswa) ?>"
+                            onclick="return confirm('Yakin hapus data ini?')"
+                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition duration-200">
+                                Hapus
+                            </a>
+                            
+                        </div>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
             <?php else: ?>
                 <div class="text-center py-8">
                     <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
@@ -383,7 +414,7 @@
     <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
         <div class="text-center">
             <h4 class="text-lg font-semibold text-gray-800 mb-4">Proses Perhitungan</h4>
-            <form method="post" action="<?= base_url('mahasiswa/prosesChip/' . $mahasiswa['id_mahasiswa']) ?>">
+            <form method="post" action="<?= base_url('siswa/prosesChip/' . $siswa['id_siswa']) ?>">
                 <button type="submit" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg">
                     <svg class="w-6 h-6 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>

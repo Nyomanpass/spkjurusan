@@ -6,7 +6,7 @@
                 <h2 class="text-2xl font-bold text-gray-800 mb-1">Tabel Nilai Alternatif</h2>
                 <p class="text-gray-600 text-sm">Data nilai alternatif untuk analisis keputusan</p>
             </div>
-            <a href="<?= base_url('mahasiswa/normalisasi') ?>"
+            <a href="<?= base_url('siswa/normalisasi') ?>"
                 class="inline-flex items-center px-5 py-2.5 bg-green-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

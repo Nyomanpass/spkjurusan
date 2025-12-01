@@ -10,6 +10,9 @@ class Setting extends CI_Controller {
         $this->load->model('Prestasi_model');
         $this->load->model('MataPelajaran_model');
         $this->load->model('KriteriaMapel_model');
+        $this->load->model('RangeMapel_model');
+        $this->load->model('RangeIQ_model');
+        $this->load->model('RangeWawancara_model');
     }
 
 
@@ -29,7 +32,9 @@ class Setting extends CI_Controller {
         $data['kriteria_mapel'] = $this->KriteriaMapel_model->getGrouped();
         $data['kriteria'] = $this->Kriteria_model->get_all();
         $data['mapel'] = $this->MataPelajaran_model->get_all();
-
+        $data['range'] = $this->RangeMapel_model->get_all();
+        $data['iq'] = $this->RangeIQ_model->get_all();
+        $data['wawancara'] = $this->RangeWawancara_model->get_all();
         $this->load->view('templates/header_dashboard');
         $this->load->view('setting/index', $data);
         $this->load->view('templates/footer_dashboard');

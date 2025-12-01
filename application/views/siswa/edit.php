@@ -6,7 +6,7 @@
 
   <!-- Form -->
   <div class="p-6">
-    <form method="post" action="<?= base_url('mahasiswa/update/' . $mahasiswa['id_mahasiswa']) ?>" class="space-y-6">
+    <form method="post" action="<?= base_url('siswa/update/' . $siswa['id_siswa']) ?>" class="space-y-6">
       <?php
       $fields = [
         'nisn' => 'NISN',
@@ -27,14 +27,14 @@
             <?php if ($key == 'alamat'): ?>
               <textarea name="<?= $key ?>" required
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 hover:border-blue-400"
-                rows="3"><?= $mahasiswa[$key] ?></textarea>
+                rows="3"><?= $siswa[$key] ?></textarea>
 
             <?php elseif ($key == 'tanggal_lahir'): ?>
-              <input type="date" name="<?= $key ?>" value="<?= $mahasiswa[$key] ?>" required
+              <input type="date" name="<?= $key ?>" value="<?= $siswa[$key] ?>" required
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 hover:border-blue-400">
 
             <?php else: ?>
-              <input type="text" name="<?= $key ?>" value="<?= $mahasiswa[$key] ?>" required
+              <input type="text" name="<?= $key ?>" value="<?= $siswa[$key] ?>" required
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 hover:border-blue-400"
                 placeholder="Masukkan <?= strtolower($label) ?>">
             <?php endif; ?>
@@ -44,7 +44,7 @@
 
       <!-- Tombol Aksi -->
       <div class="flex justify-end gap-3 pt-6 border-t">
-        <a href="<?= base_url('mahasiswa') ?>"
+        <a href="<?= base_url('siswa') ?>"
           class="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition duration-200">
           Batal
         </a>

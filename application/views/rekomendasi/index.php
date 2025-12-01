@@ -34,7 +34,7 @@ if (!empty($hasil)) {
     <input 
         type="text" 
         id="searchInput" 
-        placeholder="Cari mahasiswa..." 
+        placeholder="Cari siswa..." 
         class="w-full sm:w-1/2 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
     >
 </div>
@@ -43,7 +43,7 @@ if (!empty($hasil)) {
 <?php if (!empty($hasil)): ?>
   <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
     <div class="overflow-x-auto">
-      <table id="mahasiswaTable" class="min-w-full divide-y divide-gray-200">
+      <table id="siswaTable" class="min-w-full divide-y divide-gray-200">
         <!-- Header -->
         <thead class="bg-gradient-to-r from-blue-600 to-blue-700">
           <tr>
@@ -89,7 +89,7 @@ if (!empty($hasil)) {
     </div>
   </div>
 <?php else: ?>
-  <p class="text-gray-500 italic">Belum ada data preferensi mahasiswa.</p>
+  <p class="text-gray-500 italic">Belum ada data preferensi siswa.</p>
 <?php endif; ?>
 
 
@@ -180,7 +180,7 @@ new Chart(ctx, {
     // 🔍 Fitur Pencarian
     document.getElementById('searchInput').addEventListener('keyup', function() {
         const keyword = this.value.toLowerCase();
-        const rows = document.querySelectorAll("#mahasiswaTable tbody tr");
+        const rows = document.querySelectorAll("#siswaTable tbody tr");
 
         rows.forEach(row => {
             const nama = row.cells[0].textContent.toLowerCase();

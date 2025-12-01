@@ -2,7 +2,7 @@
   <div class="">
     <!-- Tombol Kembali -->
     <div class="mb-4">
-      <a href="<?= base_url('mahasiswa/alternatif') ?>" 
+      <a href="<?= base_url('siswa/alternatif') ?>" 
         class="inline-flex items-center px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-md transition duration-200">
         <i class="fas fa-arrow-left mr-2"></i> Kembali
       </a>

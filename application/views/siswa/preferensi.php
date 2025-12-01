@@ -9,11 +9,11 @@
         });
     ?>
 
-    <?php if (!empty($mahasiswa)): ?>
+    <?php if (!empty($siswa)): ?>
         <div class="mb-6">
-            <h2 class="text-xl font-bold text-gray-800">Hasil Preferensi untuk Mahasiswa</h2>
-            <p class="text-gray-600">Nama: <span class="font-medium text-gray-900"><?= $mahasiswa['nama_siswa']; ?></span></p>
-            <p class="text-gray-600">NIM: <span class="font-medium text-gray-900"><?= $mahasiswa['nisn']; ?></span></p>
+            <h2 class="text-xl font-bold text-gray-800">Hasil Preferensi untuk siswa</h2>
+            <p class="text-gray-600">Nama: <span class="font-medium text-gray-900"><?= $siswa['nama_siswa']; ?></span></p>
+            <p class="text-gray-600">NIM: <span class="font-medium text-gray-900"><?= $siswa['nisn']; ?></span></p>
         </div>
     <?php endif; ?>
 

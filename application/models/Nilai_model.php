@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Nilai_model extends CI_Model {
 
-    protected $table = 'nilai_mahasiswa';
+    protected $table = 'nilai_siswa';
 
     public function insert($data)
     {
@@ -19,13 +19,13 @@ class Nilai_model extends CI_Model {
     {
         foreach ($data as $row) {
             $exists = $this->db->get_where($this->table, [
-                'id_mahasiswa' => $row['id_mahasiswa'],
+                'id_siswa' => $row['id_siswa'],
                 'id_kriteria'  => $row['id_kriteria']
             ])->row_array();
 
             if ($exists) {
                 // update nilai
-                $this->db->where('id_mahasiswa', $row['id_mahasiswa']);
+                $this->db->where('id_siswa', $row['id_siswa']);
                 $this->db->where('id_kriteria', $row['id_kriteria']);
                 $this->db->update($this->table, ['nilai' => $row['nilai']]);
             } else {
@@ -37,22 +37,22 @@ class Nilai_model extends CI_Model {
     
   public function getNilaiAlternatif()
     {
-        $this->db->select('m.id_mahasiswa, m.nama_siswa, k.kode as kriteria, n.nilai');
-        $this->db->from('nilai_mahasiswa n');
-        $this->db->join('mahasiswa m', 'm.id_mahasiswa = n.id_mahasiswa');
+        $this->db->select('m.id_siswa, m.nama_siswa, k.kode as kriteria, n.nilai');
+        $this->db->from('nilai_siswa n');
+        $this->db->join('siswa m', 'm.id_siswa = n.id_siswa');
         $this->db->join('kriteria k', 'k.id_kriteria = n.id_kriteria');
-        $this->db->order_by('m.id_mahasiswa, k.kode');
+        $this->db->order_by('m.id_siswa, k.kode');
         $query = $this->db->get();
         return $query->result_array();
     }
 
     public function get_normalisasi() {
         // Ambil semua nilai
-        $this->db->select('m.id_mahasiswa, m.nama_siswa, k.kode, n.nilai');
-        $this->db->from('nilai_mahasiswa n');
-        $this->db->join('mahasiswa m', 'm.id_mahasiswa = n.id_mahasiswa');
+        $this->db->select('m.id_siswa, m.nama_siswa, k.kode, n.nilai');
+        $this->db->from('nilai_siswa n');
+        $this->db->join('siswa m', 'm.id_siswa = n.id_siswa');
         $this->db->join('kriteria k', 'k.id_kriteria = n.id_kriteria');
-        $this->db->order_by('m.id_mahasiswa, k.kode');
+        $this->db->order_by('m.id_siswa, k.kode');
         $query = $this->db->get()->result_array();
 
         // Susun data per siswa
@@ -60,7 +60,7 @@ class Nilai_model extends CI_Model {
         $max = [];
 
         foreach ($query as $row) {
-            $id = $row['id_mahasiswa'];
+            $id = $row['id_siswa'];
             $kode = $row['kode'];
             $nilai = $row['nilai'];
 
@@ -85,13 +85,13 @@ class Nilai_model extends CI_Model {
         return $normalisasi;
     }
 
-    public function hitung_preferensi($id_mahasiswa) {
-    // 1. Ambil normalisasi mahasiswa
+    public function hitung_preferensi($id_siswa) {
+    // 1. Ambil normalisasi siswa
         $normalisasi = $this->get_normalisasi();
-        if (!isset($normalisasi[$id_mahasiswa])) {
+        if (!isset($normalisasi[$id_siswa])) {
             return [];
         }
-        $nilaiNormalisasi = $normalisasi[$id_mahasiswa]['normalisasi'];
+        $nilaiNormalisasi = $normalisasi[$id_siswa]['normalisasi'];
 
         // 2. Ambil semua bobot jurusan
         $this->load->model('Bobot_model');

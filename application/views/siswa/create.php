@@ -6,7 +6,7 @@
 
     <!-- Form -->
     <div class="p-6 ">
-        <form method="post" action="<?= base_url('mahasiswa/store') ?>" class="space-y-6">
+        <form method="post" action="<?= base_url('siswa/store') ?>" class="space-y-6">
             <?php
             $fields = [
                 'nisn' => 'NISN',
@@ -56,7 +56,7 @@
             <!-- Tombol Aksi -->
             <div class="flex justify-end gap-3 pt-6 border-t">
                 <button type="button"
-                    onclick="document.getElementById('modalMahasiswa').classList.add('hidden')"
+                    onclick="document.getElementById('modalSiswa').classList.add('hidden')"
                     class="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition duration-200">
                     Batal
                 </button>

@@ -30,8 +30,8 @@
         <i class="fas fa-home w-5 mr-3"></i> Dashboard
       </a>
 
-      <a href="<?= base_url('mahasiswa') ?>"
-        class="flex items-center px-4 py-3 rounded-lg transition <?= uri_string() == 'mahasiswa' ? 'bg-gray-700' : 'hover:bg-gray-700' ?>">
+      <a href="<?= base_url('siswa') ?>"
+        class="flex items-center px-4 py-3 rounded-lg transition <?= uri_string() == 'siswa' ? 'bg-gray-700' : 'hover:bg-gray-700' ?>">
         <i class="fas fa-user-graduate w-5 mr-3"></i> Siswa
       </a>
 
@@ -45,8 +45,8 @@
         <i class="fas fa-university w-5 mr-3"></i> Jurusan
       </a>
 
-      <a href="<?= base_url('mahasiswa/alternatif') ?>"
-        class="flex items-center px-4 py-3 rounded-lg transition <?= uri_string() == 'mahasiswa/alternatif' ? 'bg-gray-700' : 'hover:bg-gray-700' ?>">
+      <a href="<?= base_url('siswa/alternatif') ?>"
+        class="flex items-center px-4 py-3 rounded-lg transition <?= uri_string() == 'siswa/alternatif' ? 'bg-gray-700' : 'hover:bg-gray-700' ?>">
         <i class="fas fa-random w-5 mr-3"></i> Alternatif
       </a>
 
@@ -68,7 +68,6 @@
 
 
       <!-- Logout -->
-
 
     </div>
 

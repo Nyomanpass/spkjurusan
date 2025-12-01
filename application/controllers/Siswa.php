@@ -1,11 +1,11 @@
 <?php
-class Mahasiswa extends CI_Controller
+class Siswa extends CI_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Mahasiswa_model');
+        $this->load->model('Siswa_model');
         $this->load->model('Raport_model');
         $this->load->model('Prestasi_model');
         $this->load->model('Tes_model');
@@ -14,6 +14,10 @@ class Mahasiswa extends CI_Controller
         $this->load->model('Preferensi_model');
         $this->load->model('Kriteria_model');
         $this->load->model('Jurusan_model');
+        $this->load->model('RangeMapel_model');
+        $this->load->model('RangeIQ_model');
+        $this->load->model('RangeWawancara_model');
+
 
         $this->load->library('session');
         $this->load->helper(['url', 'form']);
@@ -26,66 +30,66 @@ class Mahasiswa extends CI_Controller
 
     public function index()
     {
-        $data['title'] = "Data Mahasiswa";
-        $data['mahasiswa'] = $this->Mahasiswa_model->get_all();
+        $data['title'] = "Data Siswa";
+        $data['siswa'] = $this->Siswa_model->get_all();
         $data['jurusan'] = $this->Jurusan_model->get_all();
         $this->load->view('templates/header_dashboard', $data);
-        $this->load->view('mahasiswa/index', $data);
+        $this->load->view('siswa/index', $data);
         $this->load->view('templates/footer_dashboard');
     }
 
     public function create()
     {
-        $data['title'] = "Tambah Mahasiswa";
+        $data['title'] = "Tambah siswa";
         $this->load->view('templates/header_dashboard', $data);
-        $this->load->view('mahasiswa/create');
+        $this->load->view('siswa/create');
         $this->load->view('templates/footer_dashboard');
     }
 
     public function store()
     {
         $data = $this->input->post();
-        $this->Mahasiswa_model->insert($data);
-        redirect('mahasiswa');
+        $this->Siswa_model->insert($data);
+        redirect('siswa');
     }
 
     public function edit($id)
     {
-        $data['title'] = "Edit Mahasiswa";
-        $data['mahasiswa'] = $this->Mahasiswa_model->getById($id);
+        $data['title'] = "Edit siswa";
+        $data['siswa'] = $this->Siswa_model->getById($id);
         $this->load->view('templates/header_dashboard', $data);
-        $this->load->view('mahasiswa/edit', $data);
+        $this->load->view('siswa/edit', $data);
         $this->load->view('templates/footer_dashboard');
     }
 
     public function update($id)
     {
         $data = $this->input->post();
-        $this->Mahasiswa_model->update($id, $data);
-        redirect('mahasiswa');
+        $this->Siswa_model->update($id, $data);
+        redirect('siswa');
     }
 
     public function delete($id)
     {
-        $this->Mahasiswa_model->delete($id);
-        redirect('mahasiswa');
+        $this->Siswa_model->delete($id);
+        redirect('siswa');
     }
 
 
     // --- Delete Prestasi ---
-    public function deletePrestasi($id_prestasi, $id_mahasiswa)
+    public function deletePrestasi($id_prestasi, $id_siswa)
     {
         $this->Prestasi_model->delete($id_prestasi);
         $this->session->set_flashdata('success', 'Prestasi berhasil dihapus!');
-        redirect('mahasiswa/detail/' . $id_mahasiswa);
+        redirect('siswa/detail/' . $id_siswa);
     }
 
     // --- Delete Tes ---
-    public function deleteTes($id_tes, $id_mahasiswa)
+    public function deleteTes($id_tes, $id_siswa)
     {
         $this->Tes_model->delete($id_tes);
         $this->session->set_flashdata('success', 'Tes berhasil dihapus!');
-        redirect('mahasiswa/detail/' . $id_mahasiswa);
+        redirect('siswa/detail/' . $id_siswa);
     }
 
 
@@ -93,16 +97,16 @@ class Mahasiswa extends CI_Controller
     public function detail($id, $type = null, $item_id = null)
     {
         // --- DATA UTAMA ---
-        $data['mahasiswa']      = $this->Mahasiswa_model->getById($id);
-        $data['raport']         = $this->Raport_model->getByMahasiswa($id);
-        $data['prestasi']       = $this->Prestasi_model->getByMahasiswa($id);
-        $data['tes']            = $this->Tes_model->getByMahasiswa($id);
+        $data['siswa']      = $this->Siswa_model->getById($id);
+        $data['raport']         = $this->Raport_model->getBysiswa($id);
+        $data['prestasi']       = $this->Prestasi_model->getBysiswa($id);
+        $data['tes']            = $this->Tes_model->getBysiswa($id);
         $data['mata_pelajaran'] = $this->MataPelajaran_model->get_all();
 
         // --- Default null ---
         $data['edit_prestasi'] = null;
         $data['edit_tes']      = null;
-        $data['id_mahasiswa']  = $id;
+        $data['id_siswa']  = $id;
 
         // --- Mode Edit ---
         if ($type == 'prestasi' && $item_id) {
@@ -118,16 +122,16 @@ class Mahasiswa extends CI_Controller
             foreach ($this->input->post('pengetahuan') as $mapel_id => $pengetahuan) {
                 $keterampilan = $this->input->post('keterampilan')[$mapel_id];
                 $nilaiAkhir   = ceil(($pengetahuan + $keterampilan) / 2);
-
+            
                 $dataRaport = [
-                    'id_mahasiswa' => $id,
+                    'id_siswa' => $id,
                     'mapel_id'     => $mapel_id,
                     'pengetahuan'  => $pengetahuan,
                     'keterampilan' => $keterampilan,
-                    'nilai_akhir'  => $nilaiAkhir
+                    'nilai_akhir'  => $nilaiAkhir,
                 ];
 
-                $existing = $this->Raport_model->getByMahasiswaMapel($id, $mapel_id);
+                $existing = $this->Raport_model->getBysiswaMapel($id, $mapel_id);
                 if (!empty($existing)) {
                     $this->Raport_model->update($existing['id_raport'], $dataRaport);
                 } else {
@@ -136,7 +140,7 @@ class Mahasiswa extends CI_Controller
             }
 
             $this->session->set_flashdata('success', 'Data raport berhasil disimpan/diupdate!');
-            redirect('mahasiswa/detail/' . $id);
+            redirect('siswa/detail/' . $id);
         }
 
         // ---------- SIMPAN / UPDATE PRESTASI ----------
@@ -144,7 +148,7 @@ class Mahasiswa extends CI_Controller
             $post = $this->input->post();
 
             $dataPrestasi = [
-                'id_mahasiswa'   => $id,
+                'id_siswa'   => $id,
                 'jenis_prestasi' => $post['jenis_prestasi'],
                 'tingkat'        => $post['tingkat'],
                 'juara'          => $post['juara'],
@@ -158,7 +162,7 @@ class Mahasiswa extends CI_Controller
                 $this->session->set_flashdata('success', 'Prestasi berhasil ditambahkan!');
             }
 
-            redirect('mahasiswa/detail/' . $id);
+            redirect('siswa/detail/' . $id);
         }
 
         // ---------- SIMPAN / UPDATE TES ----------
@@ -166,7 +170,7 @@ class Mahasiswa extends CI_Controller
             $post = $this->input->post();
 
             $dataTes = [
-                'id_mahasiswa' => $id,
+                'id_siswa' => $id,
                 'iq'           => $post['iq'],
                 'wawancara'    => $post['wawancara']
             ];
@@ -179,21 +183,53 @@ class Mahasiswa extends CI_Controller
                 $this->session->set_flashdata('success', 'Tes berhasil ditambahkan!');
             }
 
-            redirect('mahasiswa/detail/' . $id);
+            redirect('siswa/detail/' . $id);
         }
+
+        // ====== Tambah Keterangan IQ & Wawancara ======
+
+        $tesFixed = [];
+
+        foreach ($data['tes'] as $row) {
+
+            $row = (array) $row;
+
+            $iqVal = $row['iq'] ?? 0;
+            $wwVal = $row['wawancara'] ?? 0;
+
+            $iqRange = $this->RangeIQ_model->getKeteranganByNilai($iqVal);
+            $wwRange = $this->RangeWawancara_model->getKeteranganByNilai($wwVal);
+
+            $iqRange = (array) $iqRange;
+            $wwRange = (array) $wwRange;
+
+            $row['ket_iq'] = $iqRange['keterangan'] ?? '-';
+            $row['ket_wawancara'] = $wwRange['keterangan'] ?? '-';
+
+            $tesFixed[] = $row;
+        }
+
+        $data['tes'] = $tesFixed;
+
+        foreach ($data['raport'] as &$r) {
+            $range = $this->RangeMapel_model->getKeteranganByNilai($r['nilai_akhir']);
+            $r['keterangan'] = $range->keterangan ?? '-';
+        }
+
+
 
         // --- Load View ---
         $this->load->view('templates/header_dashboard');
-        $this->load->view('mahasiswa/detail', $data);
+        $this->load->view('siswa/detail', $data);
         $this->load->view('templates/footer_dashboard');
     }
 
 
-    public function hitungNilaiChip($id_mahasiswa)
+    public function hitungNilaiChip($id_siswa)
     {
-        $raport = $this->Raport_model->getByMahasiswa($id_mahasiswa);
-        $prestasi = $this->Prestasi_model->getByMahasiswa($id_mahasiswa);
-        $tes = $this->Tes_model->getByMahasiswa($id_mahasiswa);
+        $raport = $this->Raport_model->getBysiswa($id_siswa);
+        $prestasi = $this->Prestasi_model->getBysiswa($id_siswa);
+        $tes = $this->Tes_model->getBysiswa($id_siswa);
 
         $data_nilai = [];
 
@@ -223,7 +259,7 @@ class Mahasiswa extends CI_Controller
             $nilai = count($nilaiArray) ? array_sum($nilaiArray) / count($nilaiArray) : 0;
 
             $data_nilai[] = [
-                'id_mahasiswa' => $id_mahasiswa,
+                'id_siswa' => $id_siswa,
                 'id_kriteria' => $id_kriteria,
                 'nilai' => $nilai
             ];
@@ -250,7 +286,7 @@ class Mahasiswa extends CI_Controller
             }
 
             $data_nilai[] = [
-                'id_mahasiswa' => $id_mahasiswa,
+                'id_siswa' => $id_siswa,
                 'id_kriteria' => $id_kriteria,
                 'nilai' => $nilai_c
             ];
@@ -269,7 +305,7 @@ class Mahasiswa extends CI_Controller
                 $nilai_c = ($iq + $wawancara) / 2;
 
                 $data_nilai[] = [
-                    'id_mahasiswa' => $id_mahasiswa,
+                    'id_siswa' => $id_siswa,
                     'id_kriteria' => $id_kriteria,
                     'nilai' => $nilai_c
                 ];
@@ -288,17 +324,17 @@ class Mahasiswa extends CI_Controller
     {
         $dataNilai = $this->Nilai_model->getNilaiAlternatif();
 
-        // Ubah ke format [id_mahasiswa][kode_kriteria] = nilai
+        // Ubah ke format [id_siswa][kode_kriteria] = nilai
         $alternatif = [];
         foreach ($dataNilai as $row) {
             // simpan nama_siswa
-            $alternatif[$row['id_mahasiswa']]['nama_siswa'] = $row['nama_siswa'];
-            $alternatif[$row['id_mahasiswa']][$row['kriteria']] = $row['nilai'];
+            $alternatif[$row['id_siswa']]['nama_siswa'] = $row['nama_siswa'];
+            $alternatif[$row['id_siswa']][$row['kriteria']] = $row['nilai'];
         }
 
         $data['alternatif'] = $alternatif;
         $this->load->view('templates/header_dashboard');
-        $this->load->view('mahasiswa/alternatif', $data);
+        $this->load->view('siswa/alternatif', $data);
         $this->load->view('templates/footer_dashboard');
     }
 
@@ -306,49 +342,49 @@ class Mahasiswa extends CI_Controller
     {
         $data['normalisasi'] = $this->Nilai_model->get_normalisasi();
         $this->load->view('templates/header_dashboard');
-        $this->load->view('mahasiswa/normalisasi', $data);
+        $this->load->view('siswa/normalisasi', $data);
         $this->load->view('templates/footer_dashboard');
     }
 
 
 
-    public function prosesChip($id_mahasiswa)
+    public function prosesChip($id_siswa)
     {
         // Jalankan fungsi hitung
-        $this->hitungNilaiChip($id_mahasiswa);
+        $this->hitungNilaiChip($id_siswa);
 
         // Set flash message
-        $this->session->set_flashdata('success', 'Nilai chip mahasiswa berhasil dihitung.');
+        $this->session->set_flashdata('success', 'Nilai chip siswa berhasil dihitung.');
 
         // Redirect kembali ke halaman detail
-        redirect('mahasiswa/detail/' . $id_mahasiswa);
+        redirect('siswa/detail/' . $id_siswa);
     }
 
 
 
-    public function hitungPreferensiMahasiswa($id_mahasiswa)
+    public function hitungPreferensisiswa($id_siswa)
     {
 
-        $this->Preferensi_model->hitungPreferensi($id_mahasiswa);
+        $this->Preferensi_model->hitungPreferensi($id_siswa);
 
         // Redirect atau tampilkan pesan
-        $this->session->set_flashdata('success', 'Preferensi mahasiswa berhasil dihitung');
-        redirect('mahasiswa/detail/' . $id_mahasiswa);
+        $this->session->set_flashdata('success', 'Preferensi siswa berhasil dihitung');
+        redirect('siswa/detail/' . $id_siswa);
     }
 
 
 
-    public function preferensi($id_mahasiswa)
+    public function preferensi($id_siswa)
     {
         // Ambil hasil perhitungan preferensi
-        $preferensi = $this->Nilai_model->hitung_preferensi($id_mahasiswa);
+        $preferensi = $this->Nilai_model->hitung_preferensi($id_siswa);
 
         // Kirim ke view
         $data['preferensi'] = $preferensi;
-        //find mahasiswa name
-        $data['mahasiswa'] = $this->Mahasiswa_model->getById($id_mahasiswa);
+        //find siswa name
+        $data['siswa'] = $this->Siswa_model->getById($id_siswa);
         $this->load->view('templates/header_dashboard', $data);
-        $this->load->view('mahasiswa/preferensi', $data);
+        $this->load->view('siswa/preferensi', $data);
         $this->load->view('templates/footer_dashboard', $data);
     }
 }

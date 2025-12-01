@@ -3,26 +3,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Raport_model extends CI_Model {
 
-   public function getByMahasiswa($id_mahasiswa)
+   public function getBysiswa($id_siswa) // Parameter diubah menjadi $id_siswa
         {
             $this->db->select('raport.*, mata_pelajaran.nama_mapel');
             $this->db->from('raport');
             $this->db->join('mata_pelajaran', 'raport.mapel_id = mata_pelajaran.id_mapel', 'left');
-            $this->db->where('raport.id_mahasiswa', $id_mahasiswa);
-            return $this->db->get()->result_array(); // gunakan result_array agar hasil berupa array
+            
+            // PERBAIKAN: Menggunakan 'raport.id_siswa'
+            $this->db->where('raport.id_siswa', $id_siswa); 
+            
+            return $this->db->get()->result_array();
         }
 
 
-    public function getByMahasiswaMapel($id_mahasiswa, $mapel_id)
+    public function getBySiswaMapel($id_siswa, $mapel_id) // Parameter diubah
     {
+        // PERBAIKAN: Menggunakan 'id_siswa' di array where
         return $this->db->get_where('raport', [
-            'id_mahasiswa' => $id_mahasiswa,
+            'id_siswa' => $id_siswa, // Kolom database yang benar
             'mapel_id' => $mapel_id
-        ])->row_array(); // row_array agar konsisten dengan array
+        ])->row_array();
     }
 
     public function insert($data)
     {
+        // Data yang dimasukkan ($data) harus sudah berisi key 'id_siswa'
         return $this->db->insert('raport', $data);
     }
 

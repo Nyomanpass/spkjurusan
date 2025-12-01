@@ -19,7 +19,7 @@
       <div class="flex items-center">
         <div class="flex-1">
           <p class="text-sm text-gray-500">Total Siswa</p>
-          <p class="text-3xl font-bold text-gray-800"><?= $total_mahasiswa ?? 0 ?></p>
+          <p class="text-3xl font-bold text-gray-800"><?= $total_siswa ?? 0 ?></p>
         </div>
         <div class="p-3 bg-blue-100 text-blue-600 rounded-full text-2xl">
           <i class="fas fa-user-graduate"></i>
@@ -120,7 +120,7 @@
     <h3 class="text-xl font-semibold mb-4 text-gray-800"><i class="fas fa-bolt mr-2"></i> Aksi Cepat</h3>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       <!-- Tombol trigger modal -->
-      <button onclick="document.getElementById('modalMahasiswa').classList.remove('hidden')"
+      <button onclick="document.getElementById('modalSiswa').classList.remove('hidden')"
         class="bg-white border hover:border-blue-500 hover:bg-blue-50 text-gray-700 p-6 rounded-xl text-center shadow transition w-full">
         <div class="text-3xl mb-2 text-blue-600"><i class="fas fa-user-plus"></i></div>
         <div class="font-medium">Tambah Siswa</div>
@@ -144,9 +144,9 @@
 
 
 <!-- Modal Tambah Mahasiswa -->
-<div id="modalMahasiswa" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/75">
+<div id="modalSiswa" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/75">
   <div class="rounded-xl w-full max-w-2xl p-6 relative">
-    <?php $this->load->view('mahasiswa/create'); ?>
+    <?php $this->load->view('siswa/create'); ?>
   </div>
 </div>
 

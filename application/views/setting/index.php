@@ -76,4 +76,16 @@
         <?php $this->load->view('matapelajaran/index'); ?>
     </div>
 
+     <div class="mb-8">
+        <?php $this->load->view('range_mapel/index'); ?>
+    </div>
+
+     <div class="mb-8">
+        <?php $this->load->view('range_iq/index'); ?>
+    </div>
+
+     <div class="mb-8">
+        <?php $this->load->view('range_wawancara/index'); ?>
+    </div>
+
 </div>
