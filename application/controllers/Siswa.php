@@ -320,23 +320,43 @@ class Siswa extends CI_Controller
 
 
 
-    public function alternatif()
-    {
-        $dataNilai = $this->Nilai_model->getNilaiAlternatif();
+public function alternatif()
+{
+    $dataNilai = $this->Nilai_model->getNilaiAlternatif();
 
-        // Ubah ke format [id_siswa][kode_kriteria] = nilai
-        $alternatif = [];
-        foreach ($dataNilai as $row) {
-            // simpan nama_siswa
-            $alternatif[$row['id_siswa']]['nama_siswa'] = $row['nama_siswa'];
-            $alternatif[$row['id_siswa']][$row['kriteria']] = $row['nilai'];
+    $alternatif = [];
+
+    foreach ($dataNilai as $row) {
+
+        $id       = $row['id_siswa'];
+        $kriteria = $row['kriteria'];   // C1, C2, C3, ...
+        $nilai    = $row['nilai'];
+
+        // Simpan nama siswa sekali saja
+        $alternatif[$id]['nama_siswa'] = $row['nama_siswa'];
+
+        // Simpan nilai
+        $alternatif[$id][$kriteria] = $nilai;
+
+        // Tentukan sumber range
+        if (in_array($kriteria, ['C1','C2','C3','C4','C5','C6'])) {
+            $range = $this->RangeMapel_model->getKeteranganByNilai($nilai);
+        } 
+        else {
+            $range = null;
         }
 
-        $data['alternatif'] = $alternatif;
-        $this->load->view('templates/header_dashboard');
-        $this->load->view('siswa/alternatif', $data);
-        $this->load->view('templates/footer_dashboard');
+        // Simpan keterangan
+        $alternatif[$id][$kriteria . '_ket'] = $range->keterangan ?? '-';
     }
+
+    $data['alternatif'] = $alternatif;
+
+    $this->load->view('templates/header_dashboard');
+    $this->load->view('siswa/alternatif', $data);
+    $this->load->view('templates/footer_dashboard');
+}
+
 
     public function normalisasi()
     {

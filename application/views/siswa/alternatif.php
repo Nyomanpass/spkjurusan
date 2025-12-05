@@ -44,58 +44,68 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <?php foreach ($alternatif as $id => $row): ?>
-                            <tr class="hover:bg-green-50 transition-colors duration-150">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-8 w-8">
-                                            <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-                                                <span class="text-sm font-medium text-green-600">
-                                                    <?= substr($row['nama_siswa'], 0, 1); ?>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="ml-3">
-                                            <div class="text-sm font-medium text-gray-900">
-                                                <?= $row['nama_siswa']; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                        <?= $row['C1'] ?? '-'; ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                        <?= $row['C2'] ?? '-'; ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                        <?= $row['C3'] ?? '-'; ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                        <?= $row['C4'] ?? '-'; ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                        <?= $row['C7'] ?? '-'; ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                        <?= $row['C8'] ?? '-'; ?>
-                                    </span>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                   <tbody class="bg-white divide-y divide-gray-200">
+    <?php foreach ($alternatif as $id => $row): ?>
+        <tr class="hover:bg-green-50 transition-colors duration-150">
+
+            <!-- Nama Siswa -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-8 w-8">
+                        <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                            <span class="text-sm font-medium text-green-600">
+                                <?= substr($row['nama_siswa'], 0, 1); ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-900">
+                            <?= $row['nama_siswa']; ?>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            <!-- C1 -->
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+                <div class="font-semibold text-gray-900"><?= $row['C1'] ?? '-' ?></div>
+                <div class="text-xs text-green-700"><?= $row['C1_ket'] ?? '-' ?></div>
+            </td>
+
+            <!-- C2 -->
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+                <div class="font-semibold text-gray-900"><?= $row['C2'] ?? '-' ?></div>
+                <div class="text-xs text-green-700"><?= $row['C2_ket'] ?? '-' ?></div>
+            </td>
+
+            <!-- C3 -->
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+                <div class="font-semibold text-gray-900"><?= $row['C3'] ?? '-' ?></div>
+                <div class="text-xs text-green-700"><?= $row['C3_ket'] ?? '-' ?></div>
+            </td>
+
+            <!-- C4 -->
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+                <div class="font-semibold text-gray-900"><?= $row['C4'] ?? '-' ?></div>
+                <div class="text-xs text-green-700"><?= $row['C4_ket'] ?? '-' ?></div>
+            </td>
+
+            <!-- C7 -->
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+                <div class="font-semibold text-gray-900"><?= $row['C7'] ?? '-' ?></div>
+                <div class="text-xs text-green-700"><?= $row['C7_ket'] ?? '-' ?></div>
+            </td>
+
+            <!-- C8 -->
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+                <div class="font-semibold text-gray-900"><?= $row['C8'] ?? '-' ?></div>
+                <div class="text-xs text-green-700"><?= $row['C8_ket'] ?? '-' ?></div>
+            </td>
+
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
                 </table>
             </div>
         </div>
