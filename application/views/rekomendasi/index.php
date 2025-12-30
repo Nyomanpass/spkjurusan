@@ -30,15 +30,22 @@ if (!empty($hasil)) {
 }
 ?>
 
-<div class="mb-4 mt-5">
-    <input 
-        type="text" 
-        id="searchInput" 
-        placeholder="Cari siswa..." 
-        class="w-full sm:w-1/2 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-    >
-</div>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 mt-5">
+    <div class="w-full sm:w-1/2">
+        <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Cari siswa..." 
+            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+    </div>
 
+    <div class="flex-shrink-0">
+        <a href="<?= base_url('Rekomendasi/export_pdf'); ?>" target="_blank" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow transition w-full sm:w-auto justify-center">
+            Export ke PDF
+        </a>
+    </div>
+</div>
 
 <?php if (!empty($hasil)): ?>
   <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
@@ -54,7 +61,13 @@ if (!empty($hasil)) {
               NIM
             </th>
             <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+              Jurusan Diminati
+            </th>
+            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
               Rekomendasi Jurusan
+            </th>
+            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+              Hasil
             </th>
             <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
               Nilai Preferensi
@@ -63,28 +76,44 @@ if (!empty($hasil)) {
         </thead>
 
         <!-- Body -->
-        <tbody class="bg-white divide-y divide-gray-200">
-          <?php foreach ($hasil as $index => $row): ?>
-            <tr class="hover:bg-blue-50 transition-colors duration-150">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                <?= $row['nama']; ?>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                <?= $row['nim']; ?>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">
-                  <?= $row['jurusan']; ?>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <?php foreach ($hasil as $index => $row): ?>
+          <tr class="hover:bg-blue-50 transition-colors duration-150">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+              <?= $row['nama']; ?>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+              <?= $row['nim']; ?>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
+              <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full font-medium">
+                <?= $row['jurusan_sekarang']; ?>
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">
+                <?= $row['jurusan']; ?>
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+              <?php if ($row['jurusan_sekarang'] == $row['jurusan']): ?>
+                <span class="bg-green-500 text-white px-3 py-1 rounded-md text-xs font-bold">
+                  COCOK
                 </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-center">
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium text-sm">
-                  <?= number_format($row['nilai'], 3); ?>
+              <?php else: ?>
+                <span class="bg-red-500 text-white px-3 py-1 rounded-md text-xs font-bold">
+                  TIDAK COCOK
                 </span>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
+              <?php endif; ?>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-center">
+              <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium text-sm">
+                <?= number_format($row['nilai'], 3); ?>
+              </span>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
       </table>
     </div>
   </div>

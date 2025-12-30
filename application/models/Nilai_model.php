@@ -35,10 +35,10 @@ class Nilai_model extends CI_Model {
         }
     }
     
-  public function getNilaiAlternatif()
+    public function getNilaiAlternatif()
     {
-        $this->db->select('m.id_siswa, m.nama_siswa, k.kode as kriteria, n.nilai');
-        $this->db->from('nilai_siswa n');
+        $this->db->select('m.id_siswa, m.nama_siswa, k.kode, k.type_range, n.nilai');
+        $this->db->from('nilai_siswa n'); // Ternyata nama tabelnya 'nilai_siswa'
         $this->db->join('siswa m', 'm.id_siswa = n.id_siswa');
         $this->db->join('kriteria k', 'k.id_kriteria = n.id_kriteria');
         $this->db->order_by('m.id_siswa, k.kode');
@@ -120,7 +120,5 @@ class Nilai_model extends CI_Model {
 
         return $preferensi;
     }
-
-
 
 }

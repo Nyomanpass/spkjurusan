@@ -22,6 +22,7 @@
               <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Kode</th>
               <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Nama</th>
               <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Sifat</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Type</th>
               <th class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">Aksi</th>
             </tr>
           </thead>
@@ -32,6 +33,7 @@
                 <td class="px-6 py-4 text-sm text-gray-900"><?= $row['kode'] ?></td>
                 <td class="px-6 py-4 text-sm text-gray-900"><?= $row['nama'] ?></td>
                 <td class="px-6 py-4 text-sm text-gray-900"><?= $row['sifat'] ?></td>
+                <td class="px-6 py-4 text-sm text-gray-900"><?= $row['type_range'] ?></td>
                 <td class="px-4 py-3 text-center">
                   <div class="flex justify-center space-x-2">
                     <a onclick="document.getElementById('modalEdit<?= $row['id_kriteria'] ?>').classList.remove('hidden')"

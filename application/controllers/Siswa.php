@@ -226,136 +226,125 @@ class Siswa extends CI_Controller
 
 
     public function hitungNilaiChip($id_siswa)
-    {
-        $raport = $this->Raport_model->getBysiswa($id_siswa);
-        $prestasi = $this->Prestasi_model->getBysiswa($id_siswa);
-        $tes = $this->Tes_model->getBysiswa($id_siswa);
+{
+    // Ambil data dasar
+    $raport = $this->Raport_model->getBysiswa($id_siswa);
+    $prestasi = $this->Prestasi_model->getBysiswa($id_siswa);
+    $tes = $this->Tes_model->getBysiswa($id_siswa);
 
-        $data_nilai = [];
+    $data_nilai = [];
 
-        // Ambil semua kriteria dari database
-        $kriteria_db = $this->db->get('kriteria')->result_array();
+    // 1. Ambil semua kriteria untuk mengetahui type_range masing-masing
+    $kriteria_db = $this->db->get('kriteria')->result_array();
 
-        // Map kriteria id => info lengkap
-        $kriteria_map = [];
-        foreach ($kriteria_db as $k) {
-            $kriteria_map[$k['id_kriteria']] = $k;
-        }
+    // 2. Ambil pemetaan mapel per kriteria
+    $mapel_per_kriteria = $this->Kriteria_model->getMapelPerKriteria();
 
-        // Ambil mapel per kriteria dari tabel kriteria_mapel
-        $mapel_per_kriteria = $this->Kriteria_model->getMapelPerKriteria();
-        // Format: [id_kriteria => ['mapel1', 'mapel2', ...]]
+    foreach ($kriteria_db as $k) {
+        $id_kriteria = $k['id_kriteria'];
+        $type = $k['type_range']; // Gunakan type_range, bukan kode kriteria
+        $nilai_akhir = 0;
 
-        // ===== Hitung nilai untuk kriteria yang terkait mapel (C1–C6) =====
-        foreach ($mapel_per_kriteria as $id_kriteria => $mapel_list) {
+        // A. JIKA TYPE ADALAH MAPEL
+        if ($type == 'mapel') {
+            $mapel_list = $mapel_per_kriteria[$id_kriteria] ?? [];
             $filter = array_filter($raport, function ($r) use ($mapel_list) {
                 return in_array($r['nama_mapel'], $mapel_list);
             });
 
             $nilaiArray = array_map(function ($v) {
-                return isset($v['nilai_akhir']) && is_numeric($v['nilai_akhir']) ? $v['nilai_akhir'] : 0;
+                return isset($v['nilai_akhir']) ? (float)$v['nilai_akhir'] : 0;
             }, $filter);
 
-            $nilai = count($nilaiArray) ? array_sum($nilaiArray) / count($nilaiArray) : 0;
-
-            $data_nilai[] = [
-                'id_siswa' => $id_siswa,
-                'id_kriteria' => $id_kriteria,
-                'nilai' => $nilai
-            ];
-        }
-
-        // ===== Hitung nilai prestasi akademik =====
-        // Ambil semua kriteria tipe prestasi dari database
-        $prestasi_kriteria = array_filter($kriteria_map, function ($k) {
-            return strtolower($k['nama']) === 'point prestasi akademik';
-        });
-
-        foreach ($prestasi_kriteria as $id_kriteria => $k) {
-            // Ambil nilai tingkat dari tabel prestasi_nilai
+            if (count($nilaiArray) > 0) {
+                $rata = array_sum($nilaiArray) / count($nilaiArray);
+                $nilai_akhir = number_format((float)$rata, 2, '.', ''); // Simpan desimal murni
+            }
+        } 
+        
+        // B. JIKA TYPE ADALAH PRESTASI
+        elseif ($type == 'prestasi') {
             $nilaiTingkat = $this->Kriteria_model->getNilaiTingkat();
-            // Format: [tingkat => [juara => nilai]]
-
-            $nilai_c = 0;
             foreach ($prestasi as $p) {
                 $tingkat = $p['tingkat'];
                 $juara = $p['juara'];
                 if (isset($nilaiTingkat[$tingkat])) {
-                    $nilai_c += $juara >= 4 ? ($nilaiTingkat[$tingkat]['>=4'] ?? 0) : ($nilaiTingkat[$tingkat][$juara] ?? 0);
+                    $nilai_akhir += $juara >= 4 ? ($nilaiTingkat[$tingkat]['>=4'] ?? 0) : ($nilaiTingkat[$tingkat][$juara] ?? 0);
                 }
             }
+        } 
+        
+        // C. JIKA TYPE ADALAH WAWANCARA / IQ
+        elseif ($type == 'wawancara') {
+            if (!empty($tes)) {
+                $tes_data = $tes[0];
+                $iq = (float)($tes_data['iq'] ?? 0);
+                $wawancara = (float)($tes_data['wawancara'] ?? 0);
+                $hasil = ($iq + $wawancara) / 2;
+                $nilai_akhir = number_format($hasil, 2, '.', '');
+            }
+        }
 
-            $data_nilai[] = [
-                'id_siswa' => $id_siswa,
-                'id_kriteria' => $id_kriteria,
-                'nilai' => $nilai_c
+        // Tampung data untuk disimpan
+        $data_nilai[] = [
+            'id_siswa' => $id_siswa,
+            'id_kriteria' => $id_kriteria,
+            'nilai' => $nilai_akhir
+        ];
+    }
+
+    // Simpan semua hasil ke tabel nilai_siswa
+
+    $this->Nilai_model->saveOrUpdateBatch($data_nilai);
+
+    return true;
+}
+
+    public function alternatif()
+    {
+        // Ambil list kriteria untuk header
+        $data['list_kriteria'] = $this->db->get('kriteria')->result_array();
+
+        // Ambil data nilai
+        $dataNilai = $this->Nilai_model->getNilaiAlternatif();
+
+        $alternatif = [];
+        foreach ($dataNilai as $row) {
+            $id    = $row['id_siswa'];
+            
+            // GUNAKAN '??' UNTUK MENGHINDARI ERROR UNDEFINED KEY
+            $kode  = $row['kode'] ?? null;
+            $type  = $row['type_range'] ?? null;
+            $nilai = $row['nilai'] ?? 0;
+
+            // Jika kode kriteria tidak ditemukan, lewati (skip)
+            if (!$kode) continue;
+
+            $alternatif[$id]['nama_siswa'] = $row['nama_siswa'];
+
+            // Tentukan keterangan
+            $keterangan = '-';
+            if ($type == 'mapel') {
+                $res = $this->RangeMapel_model->getKeteranganByNilai($nilai);
+                $keterangan = $res->keterangan ?? '-';
+            } elseif ($type == 'prestasi') {
+                $keterangan = $nilai . " Point";
+            } elseif ($type == 'wawancara') {
+                $res = $this->RangeWawancara_model->getKeteranganByNilai($nilai);
+                $keterangan = $res->keterangan ?? '-';
+            }
+
+            $alternatif[$id]['scores'][$kode] = [
+                'nilai' => $nilai,
+                'ket'   => $keterangan
             ];
         }
 
-        // ===== Hitung nilai tes dan wawancara =====
-        $tes_kriteria = array_filter($kriteria_map, function ($k) {
-            return strtolower($k['nama']) === 'hasil tes dan wawancara';
-        });
-
-        foreach ($tes_kriteria as $id_kriteria => $k) {
-            if (!empty($tes)) {
-                $tes_data = $tes[0];
-                $iq = isset($tes_data['iq']) && is_numeric($tes_data['iq']) ? $tes_data['iq'] : 0;
-                $wawancara = isset($tes_data['wawancara']) && is_numeric($tes_data['wawancara']) ? $tes_data['wawancara'] : 0;
-                $nilai_c = ($iq + $wawancara) / 2;
-
-                $data_nilai[] = [
-                    'id_siswa' => $id_siswa,
-                    'id_kriteria' => $id_kriteria,
-                    'nilai' => $nilai_c
-                ];
-            }
-        }
-
-        // ===== Simpan semua nilai ke tabel =====
-        $this->Nilai_model->saveOrUpdateBatch($data_nilai);
-
-        return true;
+        $data['alternatif'] = $alternatif;
+        $this->load->view('templates/header_dashboard', $data);
+        $this->load->view('siswa/alternatif', $data);
+        $this->load->view('templates/footer_dashboard');
     }
-
-
-
-public function alternatif()
-{
-    $dataNilai = $this->Nilai_model->getNilaiAlternatif();
-
-    $alternatif = [];
-
-    foreach ($dataNilai as $row) {
-
-        $id       = $row['id_siswa'];
-        $kriteria = $row['kriteria'];   // C1, C2, C3, ...
-        $nilai    = $row['nilai'];
-
-        // Simpan nama siswa sekali saja
-        $alternatif[$id]['nama_siswa'] = $row['nama_siswa'];
-
-        // Simpan nilai
-        $alternatif[$id][$kriteria] = $nilai;
-
-        // Tentukan sumber range
-        if (in_array($kriteria, ['C1','C2','C3','C4','C5','C6'])) {
-            $range = $this->RangeMapel_model->getKeteranganByNilai($nilai);
-        } 
-        else {
-            $range = null;
-        }
-
-        // Simpan keterangan
-        $alternatif[$id][$kriteria . '_ket'] = $range->keterangan ?? '-';
-    }
-
-    $data['alternatif'] = $alternatif;
-
-    $this->load->view('templates/header_dashboard');
-    $this->load->view('siswa/alternatif', $data);
-    $this->load->view('templates/footer_dashboard');
-}
 
 
     public function normalisasi()

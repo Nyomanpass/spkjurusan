@@ -21,91 +21,45 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gradient-to-r from-green-600 to-green-700">
                         <tr>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                                Kode Siswa
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                Nama Siswa
                             </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
-                                C1
-                            </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
-                                C2
-                            </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
-                                C3
-                            </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
-                                C4
-                            </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
-                                C7
-                            </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
-                                C8
-                            </th>
+                            <?php foreach ($list_kriteria as $k): ?>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider">
+                                    <?= $k['kode']; ?>
+                                </th>
+                            <?php endforeach; ?>
                         </tr>
                     </thead>
-                   <tbody class="bg-white divide-y divide-gray-200">
-    <?php foreach ($alternatif as $id => $row): ?>
-        <tr class="hover:bg-green-50 transition-colors duration-150">
 
-            <!-- Nama Siswa -->
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 h-8 w-8">
-                        <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-                            <span class="text-sm font-medium text-green-600">
-                                <?= substr($row['nama_siswa'], 0, 1); ?>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-900">
-                            <?= $row['nama_siswa']; ?>
-                        </div>
-                    </div>
-                </div>
-            </td>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <?php foreach ($alternatif as $row): ?>
+                            <tr class="hover:bg-green-50 transition-colors duration-150">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                                            <span class="text-sm font-medium text-green-600">
+                                                <?= substr($row['nama_siswa'], 0, 1); ?>
+                                            </span>
+                                        </div>
+                                        <div class="ml-3 text-sm font-medium text-gray-900">
+                                            <?= $row['nama_siswa']; ?>
+                                        </div>
+                                    </div>
+                                </td>
 
-            <!-- C1 -->
-            <td class="px-6 py-4 whitespace-nowrap text-center">
-                <div class="font-semibold text-gray-900"><?= $row['C1'] ?? '-' ?></div>
-                <div class="text-xs text-green-700"><?= $row['C1_ket'] ?? '-' ?></div>
-            </td>
-
-            <!-- C2 -->
-            <td class="px-6 py-4 whitespace-nowrap text-center">
-                <div class="font-semibold text-gray-900"><?= $row['C2'] ?? '-' ?></div>
-                <div class="text-xs text-green-700"><?= $row['C2_ket'] ?? '-' ?></div>
-            </td>
-
-            <!-- C3 -->
-            <td class="px-6 py-4 whitespace-nowrap text-center">
-                <div class="font-semibold text-gray-900"><?= $row['C3'] ?? '-' ?></div>
-                <div class="text-xs text-green-700"><?= $row['C3_ket'] ?? '-' ?></div>
-            </td>
-
-            <!-- C4 -->
-            <td class="px-6 py-4 whitespace-nowrap text-center">
-                <div class="font-semibold text-gray-900"><?= $row['C4'] ?? '-' ?></div>
-                <div class="text-xs text-green-700"><?= $row['C4_ket'] ?? '-' ?></div>
-            </td>
-
-            <!-- C7 -->
-            <td class="px-6 py-4 whitespace-nowrap text-center">
-                <div class="font-semibold text-gray-900"><?= $row['C7'] ?? '-' ?></div>
-                <div class="text-xs text-green-700"><?= $row['C7_ket'] ?? '-' ?></div>
-            </td>
-
-            <!-- C8 -->
-            <td class="px-6 py-4 whitespace-nowrap text-center">
-                <div class="font-semibold text-gray-900"><?= $row['C8'] ?? '-' ?></div>
-                <div class="text-xs text-green-700"><?= $row['C8_ket'] ?? '-' ?></div>
-            </td>
-
-        </tr>
-    <?php endforeach; ?>
-</tbody>
-
+                                <?php foreach ($list_kriteria as $k): 
+                                    $kode = $k['kode'];
+                                    $data_nilai = $row['scores'][$kode] ?? ['nilai' => '-', 'ket' => '-'];
+                                ?>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <div class="font-semibold text-gray-900"><?= $data_nilai['nilai'] ?></div>
+                                        <div class="text-xs text-green-700"><?= $data_nilai['ket'] ?></div>
+                                    </td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
                 </table>
             </div>
         </div>

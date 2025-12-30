@@ -15,7 +15,7 @@
                 'tanggal_lahir' => 'Tanggal Lahir',
                 'alamat' => 'Alamat',
                 'no_telepon' => 'No Telepon',
-                'jurusan_sekarang' => 'Jurusan Sekarang'
+                'jurusan_sekarang' => 'Jurusan Diminati',
             ];
             ?>
 

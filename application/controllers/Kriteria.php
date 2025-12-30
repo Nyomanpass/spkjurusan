@@ -22,35 +22,48 @@ class Kriteria extends CI_Controller {
         $this->load->view('templates/footer_dashboard');
     }
 
+
     public function tambah() {
         if ($this->input->post()) {
             $data = [
-                'kode'  => $this->input->post('kode'),
-                'nama'  => $this->input->post('nama'),
-                'sifat' => $this->input->post('sifat')
+                'kode'       => $this->input->post('kode'),
+                'nama'       => $this->input->post('nama'),
+                'sifat'      => $this->input->post('sifat'),
+                'type_range' => $this->input->post('type_range') 
             ];
+
             $this->Kriteria_model->insert($data);
+            
+            $this->session->set_flashdata('pesan', 'Kriteria berhasil ditambahkan!');
+            
             redirect('kriteria');
         }
+
         $this->load->view('templates/header_dashboard');
         $this->load->view('kriteria/tambah');
         $this->load->view('templates/footer_dashboard');
     }
 
+
     public function edit($id) {
-    
         if ($this->input->post()) {
             $update = [
-                'kode'  => $this->input->post('kode'),
-                'nama'  => $this->input->post('nama'),
-                'sifat' => $this->input->post('sifat')
+                'kode'       => $this->input->post('kode'),
+                'nama'       => $this->input->post('nama'),
+                'sifat'      => $this->input->post('sifat'),
+                'type_range' => $this->input->post('type_range') // Tambahkan baris ini
             ];
+            
             $this->Kriteria_model->update($id, $update);
+            $this->session->set_flashdata('pesan', 'Kriteria berhasil diupdate!');
             redirect('kriteria');
         }
 
-        $this->load->view('templates/header_dashboard');
-        $this->load->view('kriteria/edit', $data);
+        // Ambil data kriteria berdasarkan ID untuk ditampilkan di form edit
+        $data['kriteria'] = $this->Kriteria_model->getById($id); 
+
+        $this->load->view('templates/header_dashboard', $data);
+        $this->load->view('kriteria/edit', $data); // Kirim data kriteria ke view
         $this->load->view('templates/footer_dashboard');
     }
 
